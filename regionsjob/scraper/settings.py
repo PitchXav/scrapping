@@ -21,6 +21,14 @@ NEWSPIDER_MODULE = 'scraper.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+#On décide d'enregistrer les datas générées par le crawl dans liste.csv
+FEED_URI = 'liste.csv'
+ 
+#on retient le format csv comme format de fichier pour les datas récoltées
+FEED_FORMAT = 'csv'
+FEED_EXPORTERS_BASE = {
+'csv': 'scrapy.contrib.exporter.CsvItemExporter',
+}
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 

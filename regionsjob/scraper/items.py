@@ -11,7 +11,7 @@ import scrapy
 class ScraperItem(scrapy.Item):
 	# Informations de contact
     RJ_url = scrapy.Field() # OBLIGATOIRE
-    RJ_email = scrapy.Field() # FACULTATIF
+    RJ_prix = scrapy.Field() # FACULTATIF
 
     # Référence du poste si elle existe
     RJ_reference = scrapy.Field() # FACULTATIF
