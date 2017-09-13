@@ -10,27 +10,20 @@ import scrapy
 
 class ScraperItem(scrapy.Item):
 	# Informations de contact
-    RJ_url = scrapy.Field() # OBLIGATOIRE
-    RJ_prix = scrapy.Field() # FACULTATIF
-
-    # Référence du poste si elle existe
-    RJ_reference = scrapy.Field() # FACULTATIF
-    
-    # Intitulé et intégralité du texte de l'annonce 
-    RJ_intitulePoste = scrapy.Field() # OBLIGATOIRE
-    RJ_texteoffre = scrapy.Field() # OBLIGATOIRE
-    
-    # Critères non normalisés
-    RJ_contrat = scrapy.Field() # FACULTATIF
-    RJ_salaire = scrapy.Field() # FACULTATIF
-    RJ_niveauExperience = scrapy.Field() # FACULTATIF
-    RJ_niveauQualif = scrapy.Field() # FACULTATIF
-
-    # Localisation du poste. Liste de localisations
-    RJ_locCollection = scrapy.Field() # OBLIGATOIRE
-    
-    # Nom de l'entreprise
-    RJ_entreprise = scrapy.Field() # OBLIGATOIRE   
-
-    # Nom de l'entreprise
-    ats = scrapy.Field() # OBLIGATOIRE 
+    url = scrapy.Field() # OBLIGATOIRE
+    prix = scrapy.Field() # FACULTATIF
+    reference = scrapy.Field() # FACULTATIF
+    titre = scrapy.Field() # OBLIGATOIRE
+    marque = scrapy.Field() # OBLIGATOIRE
+    modele = scrapy.Field() # FACULTATIF
+    version = scrapy.Field() # FACULTATIF
+    couleur = scrapy.Field() # FACULTATIF
+    kilometrage = scrapy.Field() # FACULTATIF
+    generation = scrapy.Field() # FACULTATIF
+    ref_constructeur = scrapy.Field() # OBLIGATOIRE 
+    stock = scrapy.Field() # OBLIGATOIRE 
+    annee = scrapy.Field() # FACULTATIF
+    energie = scrapy.Field() # OBLIGATOIRE
+    content = scrapy.Field() # OBLIGATOIRE   
+    site = scrapy.Field() # OBLIGATOIRE 
+    image = scrapy.Field()
