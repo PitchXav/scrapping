@@ -43,9 +43,8 @@ class bestofrobotsSpider(scrapy.Spider):
         item['prix'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[2]/div[1]/div[1]/div/p[2]/span').extract()).strip().replace(",", ".")
         item['marque'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[2]/a/img/@alt').extract()).strip()
         item['modele'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[2]/h1/text()').extract()).strip()
-        item['content'] = ''.join(response.xpath('//*[@id="tab_description_tabbed_contents"]').extract()).strip().replace(",", " ")
+        item['content'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[1]/div').extract()).strip().replace(",", " ")
         item['stock'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[2]/div[2]/div/div[1]/text()').extract()).strip()
-        item['image'] = ''.join(response.xpath('//*[@id="MagicZoomPlusImage1543"]/img').extract()).strip()
-
+        item['image'] = ''.join(response.xpath('//img[@itemprop="image"]/@src').extract()[0]).strip()
 
         yield item
