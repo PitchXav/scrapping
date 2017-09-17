@@ -16,7 +16,7 @@ class ScraperItem(scrapy.Item):
     titre = scrapy.Field() # OBLIGATOIRE
     marque = scrapy.Field() # OBLIGATOIRE
     modele = scrapy.Field() # FACULTATIF
-    version = scrapy.Field() # FACULTATIF
+    lesplus = scrapy.Field() # FACULTATIF
     couleur = scrapy.Field() # FACULTATIF
     kilometrage = scrapy.Field() # FACULTATIF
     generation = scrapy.Field() # FACULTATIF

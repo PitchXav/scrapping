@@ -46,5 +46,5 @@ class bestofrobotsSpider(scrapy.Spider):
         item['content'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[1]/div').extract()).strip().replace(",", " ")
         item['stock'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[2]/div[2]/div/div[1]/text()').extract()).strip()
         item['image'] = ''.join(response.xpath('//img[@itemprop="image"]/@src').extract()[0]).strip()
-
+        item['lesplus'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[3]/div').extract()).strip()
         yield item
