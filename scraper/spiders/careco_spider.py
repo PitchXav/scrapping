@@ -60,19 +60,4 @@ class CarecoSpider(scrapy.Spider):
     def parse_item(self, response):
         item = response.meta['item']
         item['site'] = 'careco'
-        item['url'] = response.url
-        item['titre'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[2]/div[1]/h1/text()').extract()).strip()
-        item['prix'] = ''.join(response.xpath('//span[@class="price"]/text()').extract()[0]).strip().replace(",", ".")
-        item['version'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[4]/td/text()').extract()).strip()
-        item['marque'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[1]/td/text()').extract()).strip()
-        item['modele'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[2]/td/text()').extract()).strip()
-        item['generation'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[3]/td/text()').extract()).strip()
-        item['annee'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[6]/td/text()').extract()).strip()
-        item['kilometrage'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[7]/td/text()').extract()).strip()
-        item['couleur'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[8]/td/text()').extract()).strip()
-        item['ref_constructeur'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[10]/td/text()').extract()).strip()
-        item['content'] = ''.join(response.xpath('//html/body/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[2]/div[1]/div/text()').extract()).strip().replace(",", " ")
-        item['stock'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[2]/p/span/text()').extract()).strip()
-        item['image'] = ''.join(response.xpath('//*[@id="image-link"]/img/text()').extract()).strip()
-
         yield item
