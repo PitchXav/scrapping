@@ -39,10 +39,10 @@ class bestofrobotsSpider(scrapy.Spider):
         item = response.meta['item']
         item['site'] = 'bestofrobots'
         item['url'] = response.url
-        item['modele'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[2]/h1/text()').extract()).strip()
-        item['marque'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[2]/a/img/@alt').extract()).strip()
+        item['modele'] =  ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[2]/h1/text()').extract()).strip()
+        item['marque'] =  ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[2]/a/img/@alt').extract()).strip()
         item['content'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[1]/div').extract()).strip().replace(",", " ")
-        item['image'] = ''.join(response.xpath('//img[@itemprop="image"]/@src').extract()[0]).strip()
+        item['image'] =   ''.join(response.xpath('//img[@itemprop="image"]/@src').extract()[0]).strip()
         item['lesplus'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[3]/div').extract()).strip()
 		item['surface'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[6]/td').extract()).strip()
 		item['programme'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[13]/td').extract()).strip()
