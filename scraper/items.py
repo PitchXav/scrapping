@@ -19,3 +19,6 @@ class ScraperItem(scrapy.Item):
     site = scrapy.Field() # OBLIGATOIRE 
     image = scrapy.Field()
     programme = scrapy.Field()
+    poids = scrapy.Field()
+    autonomie = scrapy.Field()
+    temps_charge = scrapy.Field()
