@@ -18,4 +18,4 @@ class ScraperItem(scrapy.Item):
     content = scrapy.Field() # OBLIGATOIRE   
     site = scrapy.Field() # OBLIGATOIRE 
     image = scrapy.Field()
-	programme = scrapy.Field() # OBLIGATOIRE 
+	programme = scrapy.Field() # OBLIGATOIRE
