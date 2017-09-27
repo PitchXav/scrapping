@@ -44,6 +44,6 @@ class bestofrobotsSpider(scrapy.Spider):
         item['content'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[1]/div/text()').extract()).strip().replace(",", " ")
         item['image'] =   ''.join(response.xpath('//img[@itemprop="image"]/@src').extract()[0]).strip()
         item['lesplus'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[3]/div/text()').extract()).strip()
-        item['surface'] = ''.join(response.xpath('//*[@id="product-attribute-specs-table"]/tbody/tr[6]/td/text()').extract()).strip()
-        item['programme'] = ''.join(response.xpath('//th[text()="Surface recommandée"]/following-sibling::td/text()').extract()).strip()
+        item['programme'] = ''.join(response.xpath('//th[text()="Depart programmable"]/following-sibling::td/text()').extract()).strip()
+        item['surface'] = ''.join(response.xpath('//th[text()="Surface recommandee"]/following-sibling::td/text()').extract()).strip()
         yield item
