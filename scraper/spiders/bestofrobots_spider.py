@@ -46,7 +46,7 @@ class bestofrobotsSpider(scrapy.Spider):
         item['lesplus'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[3]/div/text()').extract()).strip()
         item['programme'] = ''.join(response.xpath('//th[contains(text(),"programmable")]/following-sibling::td/text()').extract()).strip()
         item['surface'] = ''.join(response.xpath('//th[contains(text(),"Surface")]/following-sibling::td/text()').extract()).strip()
-        item['poids'] = ''.join(response.xpath('//th[contains(text(),"Poids")]/following-sibling::td/text()').extract()).strip()
+        item['poids'] = ''.join(response.xpath('//th[contains(text(),"Poids")]/following-sibling::td/span/text()').extract()).strip()
         item['autonomie'] = ''.join(response.xpath('//th[contains(text(),"Autonomie")]/following-sibling::td/text()').extract()).strip()
         item['temps_charge'] = ''.join(response.xpath('//th[contains(text(),"Temps")]/following-sibling::td/text()').extract()).strip()
         yield item
