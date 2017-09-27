@@ -43,7 +43,7 @@ class bestofrobotsSpider(scrapy.Spider):
         item['marque'] =  ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[2]/a/img/@alt').extract()).strip()
         item['content'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[1]/div/text()').extract()).strip().replace(",", " ")
         item['image'] =   ''.join(response.xpath('//img[@itemprop="image"]/@src').extract()[0]).strip()
-        item['lesplus'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[3]/div/text()').extract()).strip()
+        item['lesplus'] = ''.join(response.xpath('//*[@id="product_addtocart_form"]/div[3]/div/div[4]/div[1]/div[3]/div').extract()).strip()
         item['programme'] = ''.join(response.xpath('//th[contains(text(),"programmable")]/following-sibling::td/text()').extract()).strip()
         item['surface'] = ''.join(response.xpath('//th[contains(text(),"Surface")]/following-sibling::td/text()').extract()).strip()
         item['poids'] = ''.join(response.xpath('//th[contains(text(),"Poids")]/following-sibling::td/span/text()').extract()).strip()
