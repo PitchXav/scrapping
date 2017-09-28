@@ -26,8 +26,8 @@ class destockveloSpider(scrapy.Spider):
         
         next_page = response.xpath('//div[@id="gpg"]/a/@href').extract()
         if next_page:
-            print 'PAGE' + next_page
-            yield scrapy.Request('https://www.destock-velo.com/' + next_page, callback=self.parse)
+            print 'PAGE' + next_page[0]
+            yield scrapy.Request('https://www.destock-velo.com/' + next_page[0], callback=self.parse)
 
         # extraction de toutes les URL des annonces et parsing de celles-ci
         #pieces = response.xpath('//figure[@class="productResult__img"]')
