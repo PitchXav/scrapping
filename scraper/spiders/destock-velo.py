@@ -4,10 +4,10 @@ import scrapy
 import re
 from itertools import groupby
 from scrapy.conf import settings
-from scraper.items import ScraperItem
+from scraper.items import ScraperItemVelo
 
 
-class bestofrobotsSpider(scrapy.Spider):
+class destockveloSpider(scrapy.Spider):
     name = "bestofrobots"
 
 
@@ -20,7 +20,7 @@ class bestofrobotsSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):        
-        item = ScraperItem()
+        item = ScraperItemVelo()
 
         # extraction de la page suivante sur la page courante et envoit au parser
         
