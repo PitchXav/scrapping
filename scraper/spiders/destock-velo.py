@@ -8,7 +8,7 @@ from scraper.items_velo import ScraperItemVelo
 
 
 class destockveloSpider(scrapy.Spider):
-    name = "bestofrobots"
+    name = "destockvelo"
 
 
     def start_requests(self):
@@ -37,7 +37,7 @@ class destockveloSpider(scrapy.Spider):
 
     def parse_item(self, response):
         item = response.meta['item']
-        item['site'] = 'bestofrobots'
+        item['site'] = 'destockvelo'
         item['url'] = response.url
         item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip()
         item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
