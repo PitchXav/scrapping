@@ -12,22 +12,19 @@ class destockveloSpider(scrapy.Spider):
 
 
     def start_requests(self):
-        i = 0
         urls = [
         "https://www.destock-velo.com/vente-velo-0.htm"
         ]
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
-    i += 1
     def parse(self, response):        
         item = ScraperItemVelo()
 
         # extraction de la page suivante sur la page courante et envoit au parser
         
-        next_page = response.xpath('//div[@id="gpg" and contains(.//span,"' + i +'"/following::div[@id="gpg"][1]/a/@href').extract()
+        next_page = response.xpath('/div[@id="gpg"]/following::span/following::div[@id="gpg"][1]/a/@href').extract()
         if next_page:
-            print 'PAGE' + next_page[0]
             yield scrapy.Request('https://www.destock-velo.com/' + next_page[0], callback=self.parse)
 
         # extraction de toutes les URL des annonces et parsing de celles-ci
