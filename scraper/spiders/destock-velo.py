@@ -24,7 +24,7 @@ class destockveloSpider(scrapy.Spider):
 
         # extraction de la page suivante sur la page courante et envoit au parser
         
-        next_page = response.xpath('//div[@id="gpg" and contains(.//span,"' + i*20] +'"/following::div[@id="gpg"][1]/a/@href').extract()
+        next_page = response.xpath('//div[@id="gpg" and contains(.//span,"' + i*20 +'"/following::div[@id="gpg"][1]/a/@href').extract()
         if next_page:
             print 'PAGE' + next_page[0]
             yield scrapy.Request('https://www.destock-velo.com/' + next_page[0], callback=self.parse)
