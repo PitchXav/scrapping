@@ -43,7 +43,7 @@ class destockveloSpider(scrapy.Spider):
         item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[1]/a[1]/text()').extract()).strip()
         item['modeleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[2]/a/text()').extract()).strip()
-        item['tailleVelov'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[2]/span/a/text()').extract()).strip()
+        item['tailleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[2]/span/a/text()').extract()).strip()
         item['matiereVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
         item['poidsVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
         item['prixVelo'] =  ''.join(response.xpath('//*[@id="blocannonce2"]/p[2]/text()').extract()).strip().replace('.replace("is", "was")', '')
