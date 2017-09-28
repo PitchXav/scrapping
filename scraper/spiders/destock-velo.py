@@ -33,7 +33,7 @@ class destockveloSpider(scrapy.Spider):
         for velo in response.xpath('//*[@id="afficheliste-content-col2"]/a[4]'):
             url_velo = velo.xpath('@href').extract()[0]
 
-            yield scrapy.Request(url_velo, callback=self.parse_item, meta=dict(item=item))
+            yield scrapy.Request('https://www.destock-velo.com/'+ url_velo, callback=self.parse_item, meta=dict(item=item))
 
     def parse_item(self, response):
         item = response.meta['item']
