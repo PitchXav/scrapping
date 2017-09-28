@@ -26,14 +26,14 @@ class destockveloSpider(scrapy.Spider):
         
         next_page = response.xpath('//div[@id="gpg"]/a/@href').extract()
         if next_page:
-            yield scrapy.Request(next_page[0], callback=self.parse)
+            yield scrapy.Request('https://www.destock-velo.com/'+next_page[0], callback=self.parse)
 
         # extraction de toutes les URL des annonces et parsing de celles-ci
         #pieces = response.xpath('//figure[@class="productResult__img"]')
         for velo in response.xpath('//*[@id="afficheliste-content-col2"]/a[4]'):
             url_velo = velo.xpath('@href').extract()[0]
 
-            yield scrapy.Request('https://www.destock-velo.com/'+ url_velo, callback=self.parse_item, meta=dict(item=item))
+            yield scrapy.Request(url_velo, callback=self.parse_item, meta=dict(item=item))
 
     def parse_item(self, response):
         item = response.meta['item']
