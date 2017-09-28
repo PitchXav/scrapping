@@ -10,6 +10,7 @@ import scrapy
 
 class ScraperItemVelo(scrapy.Item):
 	# Informations de contact
+    site = scrapy.Field() 
     url = scrapy.Field() 
     typeVelo = scrapy.Field() #VTT
     genreVelo = scrapy.Field() #Cross-country
