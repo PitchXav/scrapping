@@ -26,7 +26,8 @@ class destockveloSpider(scrapy.Spider):
         
         next_page = response.xpath('//div[@id="gpg"]/a/@href').extract()
         if next_page:
-            yield scrapy.Request('https://www.destock-velo.com/' + next_page[0], callback=self.parse)
+            print 'PAGE' + next_page
+            yield scrapy.Request('https://www.destock-velo.com/' + next_page, callback=self.parse)
 
         # extraction de toutes les URL des annonces et parsing de celles-ci
         #pieces = response.xpath('//figure[@class="productResult__img"]')
@@ -46,7 +47,7 @@ class destockveloSpider(scrapy.Spider):
         item['tailleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[2]/span/a/text()').extract()).strip()
         item['matiereVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
         item['poidsVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
-        item['prixVelo'] =  ''.join(response.xpath('//*[@id="blocannonce2"]/p[2]/text()').extract()).strip().replace('.replace("is", "was")', '')
+        item['prixVelo'] =  ''.join(response.xpath('//*[@id="blocannonce2"]/p[2]/text()').extract()).strip().replace('.replace("Prix origine : ', '')
         item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="blocannonce2"]/p[1]/font/b/text()').extract()).strip()
         item['photoVelo']  = ''.join(response.xpath('//*[@id="imagediv0"]/a/img').extract()).strip()
         item['descriptionVelo']= ''.join(response.xpath('//*[@id="blocannonce3"]/form/p/text()').extract()).strip()
