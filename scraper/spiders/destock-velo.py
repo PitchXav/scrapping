@@ -30,8 +30,8 @@ class destockveloSpider(scrapy.Spider):
 
         # extraction de toutes les URL des annonces et parsing de celles-ci
         #pieces = response.xpath('//figure[@class="productResult__img"]')
-        for piece in response.xpath('//h2[@class="product-name"]/a'):
-            url_piece = piece.xpath('@href').extract()[0]
+        for velo in response.xpath('//h2[@class="product-name"]/a'):
+            url_velo = velo.xpath('@href').extract()[0]
 
             yield scrapy.Request(url_piece, callback=self.parse_item, meta=dict(item=item))
 
