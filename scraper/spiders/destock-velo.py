@@ -9,7 +9,7 @@ from scraper.items_velo import ScraperItemVelo
 
 class destockveloSpider(scrapy.Spider):
     name = "destockvelo"
-
+    i = 0
 
     def start_requests(self):
         urls = [
@@ -18,13 +18,13 @@ class destockveloSpider(scrapy.Spider):
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
-    i++
+    i += 1
     def parse(self, response):        
         item = ScraperItemVelo()
 
         # extraction de la page suivante sur la page courante et envoit au parser
         
-        next_page = response.xpath('//div[@id="gpg" and contains(.//span,"' + i*20 +'"/following::div[@id="gpg"][1]/a/@href').extract()
+        next_page = response.xpath('//div[@id="gpg" and contains(.//span,"' + i +'"/following::div[@id="gpg"][1]/a/@href').extract()
         if next_page:
             print 'PAGE' + next_page[0]
             yield scrapy.Request('https://www.destock-velo.com/' + next_page[0], callback=self.parse)
