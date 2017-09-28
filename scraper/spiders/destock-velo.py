@@ -18,13 +18,13 @@ class destockveloSpider(scrapy.Spider):
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
-
+    i++
     def parse(self, response):        
         item = ScraperItemVelo()
 
         # extraction de la page suivante sur la page courante et envoit au parser
         
-        next_page = response.xpath('//div[@id="gpg"]/a/@href').extract()
+        next_page = response.xpath('//div[@id="gpg" and contains(.//span,"' + i*20] +'"/following::div[@id="gpg"][1]/a/@href').extract()
         if next_page:
             print 'PAGE' + next_page[0]
             yield scrapy.Request('https://www.destock-velo.com/' + next_page[0], callback=self.parse)
