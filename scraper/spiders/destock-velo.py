@@ -9,9 +9,10 @@ from scraper.items_velo import ScraperItemVelo
 
 class destockveloSpider(scrapy.Spider):
     name = "destockvelo"
-    i = 0
+
 
     def start_requests(self):
+        i = 0
         urls = [
         "https://www.destock-velo.com/vente-velo-0.htm"
         ]
