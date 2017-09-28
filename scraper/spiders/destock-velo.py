@@ -13,7 +13,7 @@ class destockveloSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-        "https://www.destock-velo.com/index.php?search=1&mode=0&motcles=&categorie=&taille=&type=&marque=&modele=&codepostal=&prixmax=&s3="
+        "https://www.destock-velo.com/vente-velo-0.htm"
         ]
 
         for url in urls:
@@ -30,7 +30,7 @@ class destockveloSpider(scrapy.Spider):
 
         # extraction de toutes les URL des annonces et parsing de celles-ci
         #pieces = response.xpath('//figure[@class="productResult__img"]')
-        for velo in response.xpath('//h2[@class="product-name"]/a'):
+        for velo in response.xpath('//*[@id="afficheliste-content-col2"]/a[4]'):
             url_velo = velo.xpath('@href').extract()[0]
 
             yield scrapy.Request(url_piece, callback=self.parse_item, meta=dict(item=item))
