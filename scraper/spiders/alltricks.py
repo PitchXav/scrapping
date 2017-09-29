@@ -44,8 +44,8 @@ class alltricksSpider(scrapy.Spider):
         item['url'] = response.url
         #item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
         #item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
-        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/img/@alt').extract()).strip()
-        item['modeleVelo'] = ''.join(response.xpath('//*[@id="content-product"]/div[1]/div/ol/li[6]/span/text()').extract()).strip()
+        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/a/img/@alt').extract()).strip()
+        item['modeleVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()
         item['tailleVelo'] = 'Au choix'
         item['matiereVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[1]/td[2]/text()').extract()).strip()
         item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
