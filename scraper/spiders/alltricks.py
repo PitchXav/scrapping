@@ -26,7 +26,7 @@ class alltricksSpider(scrapy.Spider):
         # extraction de la page suivante sur la page courante et envoit au parser
         total_job = '500' #''.join(response.xpath('//input[@name="listRequisition.nbElements"]/@value').extract())
         next_page_num = int(math.ceil(float(total_job)/20))
-        
+         print 'PAGE ' + next_page_num
         for i in range(1, next_page_num + 1):
             url_list = 'https://www.alltricks.fr/C-135194-destockage-velos-complets/I-Page'+ i +'_20?PageSpeed=noscript'
             print 'PAGE ' + url_list
