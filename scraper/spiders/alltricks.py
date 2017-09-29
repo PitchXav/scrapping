@@ -2,6 +2,7 @@
 
 import scrapy
 import re
+import math
 from itertools import groupby
 from scrapy.conf import settings
 from scraper.items_velo import ScraperItemVelo
