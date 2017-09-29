@@ -7,8 +7,8 @@ from scrapy.conf import settings
 from scraper.items_velo import ScraperItemVelo
 
 
-class destockveloSpider(scrapy.Spider):
-    name = "destockvelo"
+class alltricksSpider(scrapy.Spider):
+    name = "alltricks"
 
 
     def start_requests(self):
@@ -39,7 +39,7 @@ class destockveloSpider(scrapy.Spider):
 
     def parse_item(self, response):
         item = response.meta['item']
-        item['site'] = 'destockvelo'
+        item['site'] = 'alltricks'
         item['url'] = response.url
         #item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
         #item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
