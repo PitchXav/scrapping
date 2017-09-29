@@ -36,7 +36,7 @@ class alltricksSpider(scrapy.Spider):
         #pieces = response.xpath('//figure[@class="productResult__img"]')
         for velo in response.xpath('//div[@class="alltricks-Product  alltricks-Product--grid"]/a'):
             url_velo = velo.xpath('@href').extract()[0]
-            yield scrapy.Request(url_velo, callback=self.parse_item, meta=dict(item=item))
+            yield scrapy.Request('https://www.alltricks.fr/'+ url_velo, callback=self.parse_item, meta=dict(item=item))
 
     def parse_item(self, response):
         item = response.meta['item']
