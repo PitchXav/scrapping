@@ -51,7 +51,7 @@ class alltricksSpider(scrapy.Spider):
         item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
         item['prixVelo'] =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().replace("Prix public conseillé     ", "")
         item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
-        item['photoVelo']  = '.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
+        item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
         item['descriptionVelo']= ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[7]/p/text()').extract()).strip().replace(", ", " ")
         item['urlVendeur'] = response.url
         yield item
