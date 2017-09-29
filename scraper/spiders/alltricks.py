@@ -24,7 +24,7 @@ class alltricksSpider(scrapy.Spider):
 
         # extraction de la page suivante sur la page courante et envoit au parser
         # extraction de la page suivante sur la page courante et envoit au parser
-        total_job = 500 #''.join(response.xpath('//input[@name="listRequisition.nbElements"]/@value').extract())
+        total_job = '500' #''.join(response.xpath('//input[@name="listRequisition.nbElements"]/@value').extract())
         next_page_num = int(math.ceil(float(total_job)/20))
         
         for i in range(1, next_page_num + 1):
