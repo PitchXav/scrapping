@@ -38,7 +38,7 @@ class destockveloSpider(scrapy.Spider):
         item = response.meta['item']
         item['site'] = 'destockvelo'
         item['url'] = response.url
-        item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip()
+        item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().replace("Vélo ", "").replace(" >", "")
         item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[1]/a[1]/text()').extract()).strip()
         item['modeleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[2]/a/text()').extract()).strip()
@@ -47,7 +47,7 @@ class destockveloSpider(scrapy.Spider):
         item['poidsVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
         item['prixVelo'] =  ''.join(response.xpath('//*[@id="blocannonce2"]/p[2]/text()').extract()).strip().replace("Prix origine : ", "")
         item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="blocannonce2"]/p[1]/font/b/text()').extract()).strip()
-        item['photoVelo']  = ''.join(response.xpath('//*[@id="imagediv0"]/a/img').extract()).strip()
+        item['photoVelo']  = 'https://www.destock-velo.com/' +''.join(response.xpath('//*[@id="imagediv0"]/a/img/@src').extract()).strip()
         item['descriptionVelo']= ''.join(response.xpath('//*[@id="blocannonce3"]/form/p/text()').extract()).strip()
         item['urlVendeur'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
         yield item
