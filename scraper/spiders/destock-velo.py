@@ -38,7 +38,7 @@ class destockveloSpider(scrapy.Spider):
         item = response.meta['item']
         item['site'] = 'destockvelo'
         item['url'] = response.url
-        item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().replace("Vélo ", "").replace(" >", "")
+        item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
         item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[1]/a[1]/text()').extract()).strip()
         item['modeleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[2]/a/text()').extract()).strip()
