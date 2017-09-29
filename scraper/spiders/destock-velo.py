@@ -45,7 +45,7 @@ class destockveloSpider(scrapy.Spider):
         item['tailleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[2]/span/a/text()').extract()).strip()
         item['matiereVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
         item['poidsVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
-        item['prixVelo'] =  ''.join(response.xpath('//*[@id="blocannonce2"]/p[2]/text()').extract()).strip().replace('.replace("Prix origine : ', '')
+        item['prixVelo'] =  ''.join(response.xpath('//*[@id="blocannonce2"]/p[2]/text()').extract()).strip().replace("Prix origine : ", "")
         item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="blocannonce2"]/p[1]/font/b/text()').extract()).strip()
         item['photoVelo']  = ''.join(response.xpath('//*[@id="imagediv0"]/a/img').extract()).strip()
         item['descriptionVelo']= ''.join(response.xpath('//*[@id="blocannonce3"]/form/p/text()').extract()).strip()
