@@ -44,14 +44,14 @@ class alltricksSpider(scrapy.Spider):
         item['url'] = response.url
         #item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
         #item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
-        #item['marqueVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[1]/a[1]/text()').extract()).strip()
-        #item['modeleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[1]/span[2]/a/text()').extract()).strip()
-        #item['tailleVelo'] = ''.join(response.xpath('//*[@id="blocannonce3"]/div[1]/p[2]/span/a/text()').extract()).strip()
-        #item['matiereVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
-        #item['poidsVelo'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
-        #item['prixVelo'] =  ''.join(response.xpath('//*[@id="blocannonce2"]/p[2]/text()').extract()).strip().replace("Prix origine : ", "")
-        #item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="blocannonce2"]/p[1]/font/b/text()').extract()).strip()
-        #item['photoVelo']  = 'https://www.destock-velo.com/' +''.join(response.xpath('//*[@id="imagediv0"]/a/img/@src').extract()).strip()
-        #item['descriptionVelo']= ''.join(response.xpath('//*[@id="blocannonce3"]/form/p/text()').extract()).strip().replace(", ", " ")
-        #item['urlVendeur'] = ''.join(response.xpath('//*[@id="blocannonce1"]/h1/text()').extract()).strip()
+        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/img/@alt').extract()).strip()
+        item['modeleVelo'] = ''.join(response.xpath('//*[@id="content-product"]/div[1]/div/ol/li[6]/span/text()').extract()).strip()
+        item['tailleVelo'] = 'Au choix'
+        item['matiereVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[1]/td[2]/text()').extract()).strip()
+        item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
+        item['prixVelo'] =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().replace("Prix public conseillé     ", "")
+        item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
+        item['photoVelo']  = '.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
+        item['descriptionVelo']= ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[7]/p/text()').extract()).strip().replace(", ", " ")
+        item['urlVendeur'] = response.url
         yield item
