@@ -29,7 +29,7 @@ class bikesterSpider(scrapy.Spider):
 
         # extraction de toutes les URL des annonces et parsing de celles-ci
         #pieces = response.xpath('//figure[@class="productResult__img"]')
-        for velo in response.xpath('//a[@class="productLink"]/'):
+        for velo in response.xpath('//a[@class="productLink"]'):
             url_velo = velo.xpath('@href').extract()[0]
 
             yield scrapy.Request(url_velo, callback=self.parse_item, meta=dict(item=item))
