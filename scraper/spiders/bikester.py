@@ -39,12 +39,12 @@ class bikesterSpider(scrapy.Spider):
         item['site'] = 'bikester'
         item['url'] = response.url
         item['typeVelo'] = ''.join(response.xpath('//ol/li[3]/a/span[@itemprop="title"]/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
-        item['genreVelo'] = ''.join(response.xpath('//*[@id="tabs-2"]/div/table/tbody/tr[1]/td[2]/text()').extract()).strip()
+        item['genreVelo'] = ''.join(response.xpath('//tr[td//text()[contains(.,"Utilisation")]]/td[2]//text()').extract()).strip()
         item['marqueVelo'] = ''.join(response.xpath('//div[@class="manufacturersImage_bigFoto"]/a/img/@title').extract()).strip()
         item['modeleVelo'] = ''.join(response.xpath('//h1/text()').extract()).strip()
         item['tailleVelo'] = 'Au choix'
-        item['matiereVelo'] = ''.join(response.xpath('//*[@id="tabs-2"]/div/table/tbody/tr[2]/td[2]/span[3]/text()').extract()).strip()
-        item['poidsVelo'] = ''.join(response.xpath('//*[@id="tabs-2"]/div/table/tbody/tr[28]/td[2]/text()').extract()).strip()
+        item['matiereVelo'] = ''.join(response.xpath('//tr[td//text()[contains(.,"Cadre")]]/td[2]/span[2]/text()').extract()).strip()
+        item['poidsVelo'] = ''.join(response.xpath('//tr[td//text()[contains(.,"Poids")]]/td[2]//text()').extract()).strip()
         item['prixVelo'] =  ''.join(response.xpath('//*[@id="productPriceContainer"]/div[1]/span/text()').extract()).strip().replace("Prix origine : ", "")
         item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="productPriceContainer"]/div[2]/span/text()').extract()).strip()
         item['photoVelo']  = ''.join(response.xpath('//*[@id="ProductImage"]/div[2]/img/@src').extract()).strip()
