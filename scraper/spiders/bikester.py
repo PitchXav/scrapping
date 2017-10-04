@@ -7,8 +7,8 @@ from scrapy.conf import settings
 from scraper.items_velo import ScraperItemVelo
 
 
-class destockveloSpider(scrapy.Spider):
-    name = "destockvelo"
+class bikesterSpider(scrapy.Spider):
+    name = "bikester"
 
 
     def start_requests(self):
