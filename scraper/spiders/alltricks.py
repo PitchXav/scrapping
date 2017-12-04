@@ -42,6 +42,32 @@ class alltricksSpider(scrapy.Spider):
         item = response.meta['item']
         item['site'] = 'alltricks'
         item['url'] = response.url
+
+        titreVelo = scrapy.Field() #xtc advanced 3
+        photoVelo  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
+        descriptionVelo= scrapy.Field()
+
+        universVelo = scrapy.Field() #VTT
+        cadreVelo = scrapy.Field() #semi rigide
+
+        pratiqueVelo = scrapy.Field() #Cross-country
+        genreVelo = scrapy.Field() #homme
+    
+        marqueVelo = ''.join(response.xpath('//*[@id="product-header-order-brand"]/a/img/@alt').extract()).strip()
+    
+    
+        matieriauxVelo = scrapy.Field() #carbone
+    
+        poidsVelo = scrapy.Field() 
+        prixVelo =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
+    
+
+        tailleUserVelo = scrapy.Field() #M
+        tailleRoueVelo= scrapy.Field()
+
+
+
+
         #item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
         #item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/a/img/@alt').extract()).strip()
@@ -53,5 +79,5 @@ class alltricksSpider(scrapy.Spider):
         item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
         item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
         item['descriptionVelo']= ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[7]/p/text()').extract()).strip().replace(", ", " ")
-        item['urlVendeur'] = response.url
+ 
         yield item
