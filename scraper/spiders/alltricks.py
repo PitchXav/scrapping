@@ -2,17 +2,15 @@
 
 import scrapy
 import re
-import math
 from itertools import groupby
 from scrapy.conf import settings
 from scraper.items_velo import ScraperItemVelo
-
 
 class alltricksSpider(scrapy.Spider):
     name = "alltricks"
 
 
-   def start_requests(self):
+    def start_requests(self):
         urls = [
         'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-218385-velo_complet_2017_cube_ltd_pro_29___shimano_xt_11v_vert_noir',
         'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-285887-vtt_semi_rigide_mondraker_2017_prime__27_5____shimano_slx_10v_noir_jaune',
@@ -59,49 +57,39 @@ class alltricksSpider(scrapy.Spider):
         item['site'] = 'alltricks'
         item['url'] = response.url
 
-        titreVelo = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()#xtc advanced 3
-        photoVelo  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
-        descriptionVelo= cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
+        item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()#xtc advanced 3
+        item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
+        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
 
-        universVelo = ''.join(response.xpath('//*[@id="content-product"]/div[1]/div/ol/li[last()-1]/a/text()').extract()).strip() #VTT
-        cadreVelo = findCritere(cadre,titreVelo) #semi rigide
+        item['universVelo'] = ''.join(response.xpath('//*[@id="content-product"]/div[1]/div/ol/li[last()-1]/a/text()').extract()).strip() #VTT
+        item['cadreVelo'] = findCritere(cadre,titreVelo) #semi rigide
 
         #pratiqueVelo = scrapy.Field() #Cross-country
         #genreVelo = scrapy.Field() #homme
     
-        marqueVelo = ''.join(response.xpath('//*[@id="product-header-order-brand"]/img/@alt').extract()).strip()
+        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/img/@alt').extract()).strip()
     
     
-        matieriauxVelo = '' #carbone
+        item['matieriauxVelo'] = '' #carbone
     
         #poidsVelo = scrapy.Field() 
-        prixVelo =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
+        item['prixVelo'] =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
     
 
         #tailleUserVelo = scrapy.Field() #M
         #tailleRoueVelo= scrapy.Field()
 
-
-
-
-        #item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
-        #item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
-        #item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/a/img/@alt').extract()).strip()
-        #item['modeleVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()
         #item['tailleVelo'] = 'Au choix'
-        #item['matiereVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[1]/td[2]/text()').extract()).strip()
         #item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
-        #item['prixVelo'] =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
-        vitem['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
-        #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
+        item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip(
 
  
         yield item
 
 
-    def cleanhtml(raw_html):
+    def cleanhtml(texte):
         cleanr = re.compile('<.*?>')
-        cleantext = re.sub(cleanr, '', raw_html)
+        cleantext = re.sub(cleanr, '', texte)
         return cleantext
 
     def findCritere(liste, texte):
