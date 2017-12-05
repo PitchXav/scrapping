@@ -73,16 +73,14 @@ class alltricksSpider(scrapy.Spider):
         item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
 
-        pratiqueVelo = findCritere(pratique, item['titreVelo']) #Cross-country
-        genreVelo = findCritere(genre, item['titreVelo']) #homme
+        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']) #Cross-country
+        item['genreVelo'] = findCritere(genre, item['titreVelo']) #homme
     
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip()
     
     
         item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/th[2]').extract()).strip()) #carbone
     
-        #poidsVelo = scrapy.Field() 
-
         #tailleUserVelo = scrapy.Field() #M
         #tailleRoueVelo= scrapy.Field()
 
