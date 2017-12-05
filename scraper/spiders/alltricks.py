@@ -45,7 +45,11 @@ class alltricksSpider(scrapy.Spider):
             cleanr = re.compile('<.*?>')
             cleanr2 = re.compile('[\s+]')
             cleantext = re.sub(cleanr, '', texte)
-            cleantext = re.sub(cleanr2, '', cleantext)
+            return cleantext
+
+        def cleanSpace(texte):
+            cleanr = re.compile('[\s+]')
+            cleantext = re.sub(cleanr, '', texte)
             return cleantext
 
         def findCritere(liste, texte):
@@ -76,18 +80,21 @@ class alltricksSpider(scrapy.Spider):
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
 
         item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']) #Cross-country
+         if not item['pratiqueVelo']:
+            item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']) #Cross-country
+
         item['genreVelo'] = findCritere(genre, item['titreVelo']) #homme
     
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip()
     
     
-        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/th[2]').extract()).strip()) #carbone
-    
+        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
+
         #tailleUserVelo = scrapy.Field() #M
         #tailleRoueVelo= scrapy.Field()
 
-        item['poidsVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]').extract()).strip())
-        item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
+        item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]').extract()).strip())
+        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip())
 
  
         yield item
