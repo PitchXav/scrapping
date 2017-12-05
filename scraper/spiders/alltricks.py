@@ -56,8 +56,8 @@ class alltricksSpider(scrapy.Spider):
                     return 'n.c'
 
         item = ScraperItemVelo()
-        cadre = ['Semi-rigide','Tout suspendu']
-        materiaux = ['Aluminium','Acier','Acier','carbone']
+        cadre = ['Semi-rigide','Tout-suspendu']
+        materiaux = ['Aluminium','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX']
