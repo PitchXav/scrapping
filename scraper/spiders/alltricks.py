@@ -51,14 +51,14 @@ class alltricksSpider(scrapy.Spider):
         ]
 
         for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+            yield scrapy.Request(url=url, callback=self.parse_item)
 
     def parse(self, response):        
-        item = ScraperItemVelo()
+      
         yield scrapy.Request(response.url, callback=self.parse_item, meta=dict(item=item)) 
 
     def parse_item(self, response):
-
+        item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout suspendu']
         mateiaux = ['Aluminium','Acier','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
