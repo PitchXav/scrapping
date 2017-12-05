@@ -50,7 +50,7 @@ class alltricksSpider(scrapy.Spider):
             print liste
             print texte
             for word in liste:
-                if word.replace(' ','-').lower() in texte.replace(' ','-').lower():
+                if word.lower() in texte.lower():
                     return word
                 else:
                     return 'n.c'
@@ -73,13 +73,13 @@ class alltricksSpider(scrapy.Spider):
         item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
 
-        #pratiqueVelo = scrapy.Field() #Cross-country
-        #genreVelo = scrapy.Field() #homme
+        pratiqueVelo = findCritere(pratique, item['titreVelo']) #Cross-country
+        genreVelo = findCritere(genre, item['titreVelo']) #homme
     
-        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/img/@alt').extract()).strip()
+        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip()
     
     
-        item['matieriauxVelo'] = '' #carbone
+        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/th[2]').extract()).strip()) #carbone
     
         #poidsVelo = scrapy.Field() 
 
