@@ -43,7 +43,6 @@ class alltricksSpider(scrapy.Spider):
     def parse_item(self, response):
         def cleanhtml(texte):
             cleanr = re.compile('<.*?>')
-            cleanr2 = re.compile('[\s+]')
             cleantext = re.sub(cleanr, '', texte)
             return cleantext
 
@@ -53,13 +52,11 @@ class alltricksSpider(scrapy.Spider):
             return cleantext
 
         def findCritere(liste, texte):
-            print liste
-            print texte
+            retour = 'n.c'
             for word in liste:
                 if re.search(word.encode('utf-8'), texte.encode('utf-8'), re.IGNORECASE):
-                    return word
-                else:
-                    return 'n.c'
+                    retour = word
+            return retour
 
         item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout-suspendu']
@@ -93,7 +90,7 @@ class alltricksSpider(scrapy.Spider):
         item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
 
         #tailleUserVelo = 
-        item['tailleRoueVelo'] = ''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip()
+        item['tailleRoueVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip())
 
         item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip())
         item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip())
