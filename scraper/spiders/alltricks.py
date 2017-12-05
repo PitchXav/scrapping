@@ -80,7 +80,7 @@ class alltricksSpider(scrapy.Spider):
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
 
         item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']) #Cross-country
-         if not item['pratiqueVelo']:
+        if not item['pratiqueVelo']:
             item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']) #Cross-country
 
         item['genreVelo'] = findCritere(genre, item['titreVelo']) #homme
