@@ -50,7 +50,7 @@ class alltricksSpider(scrapy.Spider):
             print liste
             print texte
             for word in liste:
-                if word.lower() in texte.lower():
+                if re.search(word, texte, re.IGNORECASE):
                     return word
                 else:
                     return 'n.c'
