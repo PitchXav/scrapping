@@ -79,8 +79,6 @@ class alltricksSpider(scrapy.Spider):
         item['matieriauxVelo'] = '' #carbone
     
         #poidsVelo = scrapy.Field() 
-        item['prixVelo'] =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
-    
 
         #tailleUserVelo = scrapy.Field() #M
         #tailleRoueVelo= scrapy.Field()

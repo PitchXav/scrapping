@@ -29,7 +29,7 @@ class ScraperItemVelo(scrapy.Item):
     matieriauxVelo = scrapy.Field() #carbone
     
     poidsVelo = scrapy.Field() 
-    prixVelo =  scrapy.Field()
+    prixPromotionVelo =  scrapy.Field()
     
 
     tailleUserVelo = scrapy.Field() #M
