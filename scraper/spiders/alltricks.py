@@ -44,7 +44,7 @@ class alltricksSpider(scrapy.Spider):
         def cleanhtml(texte):
             cleanr = re.compile('<.*?>')
             cleantext = re.sub(cleanr, '', texte)
-            return cleantext
+            return cleantext.sub('[\s+]', '', s)
 
         def findCritere(liste, texte):
             print liste
@@ -86,8 +86,7 @@ class alltricksSpider(scrapy.Spider):
         #tailleUserVelo = scrapy.Field() #M
         #tailleRoueVelo= scrapy.Field()
 
-        #item['tailleVelo'] = 'Au choix'
-        #item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
+        item['poidsVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]').extract()).strip())
         item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
 
  
