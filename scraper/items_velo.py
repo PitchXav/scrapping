@@ -25,6 +25,7 @@ class ScraperItemVelo(scrapy.Item):
     
     marqueVelo = scrapy.Field() #Giant
     
+    styleVelo = scrapy.Field() #VTT
     
     matieriauxVelo = scrapy.Field() #carbone
     

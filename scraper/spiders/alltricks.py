@@ -66,7 +66,7 @@ class alltricksSpider(scrapy.Spider):
         materiaux = ['Aluminium','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
-        univers = ['VTT','VTC','Vélo de ville','BMX']
+        univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Pliant','enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon']
 
         item['site'] = 'alltricks'
@@ -78,22 +78,24 @@ class alltricksSpider(scrapy.Spider):
 
         item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
-
+        item['styleVelo'] = findCritere(style, item['titreVelo']) # #VTT
         item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']) #Cross-country
+
         if not item['pratiqueVelo']:
             item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']) #Cross-country
 
         item['genreVelo'] = findCritere(genre, item['titreVelo']) #homme
-    
+        if not item['genreVelo']:
+            item['genreVelo'] = findCritere(genre, item['descriptionVelo']) #homme
+
+
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip()
-    
-    
         item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
 
-        #tailleUserVelo = scrapy.Field() #M
-        #tailleRoueVelo= scrapy.Field()
+        #tailleUserVelo = 
+        item['tailleRoueVelo'] = ''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Roues")]/td[2]|th[2]').extract()).strip()
 
-        item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]').extract()).strip())
+        item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip())
         item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip())
 
  
