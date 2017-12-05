@@ -9,6 +9,18 @@ from scraper.items_velo import ScraperItemVelo
 class alltricksSpider(scrapy.Spider):
     name = "alltricks"
 
+    def cleanhtml(texte):
+        cleanr = re.compile('<.*?>')
+        cleantext = re.sub(cleanr, '', texte)
+        return cleantext
+
+    def findCritere(liste, texte):
+        for word in liste:
+            if texte.index(word) > 0
+                return word
+            else
+                return ''
+
 
     def start_requests(self):
         urls = [
@@ -81,20 +93,7 @@ class alltricksSpider(scrapy.Spider):
 
         #item['tailleVelo'] = 'Au choix'
         #item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
-        item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip(
+        item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
 
  
         yield item
-
-
-    def cleanhtml(texte):
-        cleanr = re.compile('<.*?>')
-        cleantext = re.sub(cleanr, '', texte)
-        return cleantext
-
-    def findCritere(liste, texte):
-       for word in liste:
-            if texte.index(word) > 0
-                return word
-            else
-                return ''
