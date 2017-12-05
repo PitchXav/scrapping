@@ -9,19 +9,6 @@ from scraper.items_velo import ScraperItemVelo
 class alltricksSpider(scrapy.Spider):
     name = "alltricks"
 
-    def cleanhtml(texte):
-        cleanr = re.compile('<.*?>')
-        cleantext = re.sub(cleanr, '', texte)
-        return cleantext
-
-    def findCritere(liste, texte):
-        for word in liste:
-            if word in texte:
-                return word
-            else:
-                return ''
-
-
     def start_requests(self):
         urls = [
         'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-218385-velo_complet_2017_cube_ltd_pro_29___shimano_xt_11v_vert_noir',
@@ -92,3 +79,15 @@ class alltricksSpider(scrapy.Spider):
 
  
         yield item
+
+    def cleanhtml(texte):
+        cleanr = re.compile('<.*?>')
+        cleantext = re.sub(cleanr, '', texte)
+        return cleantext
+
+    def findCritere(liste, texte):
+        for word in liste:
+            if word in texte:
+                return word
+            else:
+                return ''
