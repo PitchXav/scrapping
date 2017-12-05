@@ -51,7 +51,7 @@ class alltricksSpider(scrapy.Spider):
         ]
 
         for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse_item, meta=dict(item=item))
+            yield scrapy.Request(url=url, callback=self.parse_item)
 
     def parse_item(self, response):
         item = ScraperItemVelo()
@@ -61,7 +61,6 @@ class alltricksSpider(scrapy.Spider):
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         genre = ['femme','homme','adulte','enfant','fille','garçon']
 
-        item = response.meta['item']
         item['site'] = 'alltricks'
         item['url'] = response.url
 
