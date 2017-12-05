@@ -56,7 +56,7 @@ class alltricksSpider(scrapy.Spider):
             print liste
             print texte
             for word in liste:
-                if re.search(word, texte, re.IGNORECASE):
+                if re.search(word.encode('utf-8'), texte.encode('utf-8'), re.IGNORECASE):
                     return word
                 else:
                     return 'n.c'
@@ -79,8 +79,8 @@ class alltricksSpider(scrapy.Spider):
         item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
         item['styleVelo'] = findCritere(style, item['titreVelo']) # #VTT
-        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']) #Cross-country
 
+        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']) #Cross-country
         if not item['pratiqueVelo']:
             item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']) #Cross-country
 
@@ -93,7 +93,7 @@ class alltricksSpider(scrapy.Spider):
         item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
 
         #tailleUserVelo = 
-        item['tailleRoueVelo'] = ''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Roues")]/td[2]|th[2]').extract()).strip()
+        item['tailleRoueVelo'] = ''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip()
 
         item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip())
         item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip())
