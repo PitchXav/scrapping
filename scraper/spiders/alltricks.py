@@ -47,17 +47,20 @@ class alltricksSpider(scrapy.Spider):
             return cleantext
 
         def findCritere(liste, texte):
+            print liste
+            print texte
             for word in liste:
                 if word in texte:
                     return word
                 else:
-                    return ''
+                    return 'n.c'
 
         item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout suspendu']
         mateiaux = ['Aluminium','Acier','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
+        univers = ['VTT','VTC','Vélo de ville','BMX']
         genre = ['femme','homme','adulte','enfant','fille','garçon']
 
         item['site'] = 'alltricks'
@@ -67,7 +70,7 @@ class alltricksSpider(scrapy.Spider):
         item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
         item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
 
-        item['universVelo'] = ''.join(response.xpath('//*[@id="content-product"]/div[1]/div/ol/li[last()-1]/a/text()').extract()).strip() #VTT
+        item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
 
         #pratiqueVelo = scrapy.Field() #Cross-country
