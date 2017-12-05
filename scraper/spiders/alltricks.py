@@ -18,7 +18,7 @@ class alltricksSpider(scrapy.Spider):
         for word in liste:
             if word in texte:
                 return word
-            else
+            else:
                 return ''
 
 
