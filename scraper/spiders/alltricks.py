@@ -54,7 +54,7 @@ class alltricksSpider(scrapy.Spider):
         def findCritere(liste, texte):
             retour = 'n.c'
             for word in liste:
-                if re.search(word, texte, re.IGNORECASE):
+                if re.search(word.compile('\D+', re.UNICODE), texte.compile('\D+', re.UNICODE), re.IGNORECASE):
                     retour = word
             return retour
 
@@ -63,7 +63,7 @@ class alltricksSpider(scrapy.Spider):
         materiaux = ['Aluminium','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
-        univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Pliant','enfant']
+        univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon']
 
         item['site'] = 'alltricks'
