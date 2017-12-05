@@ -68,7 +68,7 @@ class alltricksSpider(scrapy.Spider):
         item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
 
         item['universVelo'] = ''.join(response.xpath('//*[@id="content-product"]/div[1]/div/ol/li[last()-1]/a/text()').extract()).strip() #VTT
-        item['cadreVelo'] = findCritere(cadre,titreVelo) #semi rigide
+        item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
 
         #pratiqueVelo = scrapy.Field() #Cross-country
         #genreVelo = scrapy.Field() #homme
