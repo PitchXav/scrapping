@@ -16,7 +16,7 @@ class alltricksSpider(scrapy.Spider):
 
     def findCritere(liste, texte):
         for word in liste:
-            if texte.index(word) > 0
+            if word in texte:
                 return word
             else
                 return ''
