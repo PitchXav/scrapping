@@ -41,6 +41,18 @@ class alltricksSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse_item)
 
     def parse_item(self, response):
+        def cleanhtml(texte):
+            cleanr = re.compile('<.*?>')
+            cleantext = re.sub(cleanr, '', texte)
+            return cleantext
+
+        def findCritere(liste, texte):
+            for word in liste:
+                if word in texte:
+                    return word
+                else:
+                    return ''
+
         item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout suspendu']
         mateiaux = ['Aluminium','Acier','Acier','carbone']
@@ -80,14 +92,3 @@ class alltricksSpider(scrapy.Spider):
  
         yield item
 
-    def cleanhtml(texte):
-        cleanr = re.compile('<.*?>')
-        cleantext = re.sub(cleanr, '', texte)
-        return cleantext
-
-    def findCritere(liste, texte):
-        for word in liste:
-            if word in texte:
-                return word
-            else:
-                return ''
