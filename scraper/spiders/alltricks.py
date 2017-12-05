@@ -43,8 +43,10 @@ class alltricksSpider(scrapy.Spider):
     def parse_item(self, response):
         def cleanhtml(texte):
             cleanr = re.compile('<.*?>')
+            cleanr2 = re.compile('[\s+]')
             cleantext = re.sub(cleanr, '', texte)
-            return cleantext.sub('[\s+]', '', s)
+            cleantext = re.sub(cleanr2, '', cleantext)
+            return cleantext
 
         def findCritere(liste, texte):
             print liste
