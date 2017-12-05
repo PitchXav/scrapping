@@ -50,14 +50,14 @@ class alltricksSpider(scrapy.Spider):
             print liste
             print texte
             for word in liste:
-                if word in texte:
+                if word.replace(' ','-').lower() in texte.replace(' ','-').lower():
                     return word
                 else:
                     return 'n.c'
 
         item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout suspendu']
-        mateiaux = ['Aluminium','Acier','Acier','carbone']
+        materiaux = ['Aluminium','Acier','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX']
