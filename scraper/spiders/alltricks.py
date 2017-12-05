@@ -12,72 +12,101 @@ class alltricksSpider(scrapy.Spider):
     name = "alltricks"
 
 
-    def start_requests(self):
+   def start_requests(self):
         urls = [
-        "https://www.alltricks.fr/C-135194-destockage-velos-complets/I-Page1_20?PageSpeed=noscript"
+        "https://www.alltricks.fr/F-11947-velos-complets-vtt/P-218385-velo_complet_2017_cube_ltd_pro_29___shimano_xt_11v_vert_noir",
+        "https://www.alltricks.fr/F-11947-velos-complets-vtt/P-285887-vtt_semi_rigide_mondraker_2017_prime__27_5____shimano_slx_10v_noir_jaune",
+        "https://www.alltricks.fr/F-11947-velos-complets-vtt/P-257189-vtt_tout_suspendu_mondraker_2017_factor__27_5____sram_nx1_10v_gris_blanc",
+        "https://www.alltricks.fr/F-41505-velos-route-_-cyclocross-_-triathlon/P-198391-velo_de_route_bmc_2017_teammachine_alr01_shimano_105_11v_gris",
+        "https://www.alltricks.fr/F-41505-velos-route-_-cyclocross-_-triathlon/P-277296-velo_de_route_trek_2017_domane_slr_8_shimano_dura_ace_r9100_11v_noir_argent",
+        "https://www.alltricks.fr/F-41505-velos-route-_-cyclocross-_-triathlon/P-279403-velo_de_triathlon_bmc_2017_timemachine_02_shimano_ultegra_di2_11v_orange_noir",
+        "https://www.alltricks.fr/F-41502-velos-complets-bmx-race/P-217599-bmx_race_inspyre_evo_cruiser_noir_jaune_2017",
+        "https://www.alltricks.fr/F-41502-velos-complets-bmx-race/P-242958-bmx_race_mongoose_title_expert_noir_orange_2017",
+        "https://www.alltricks.fr/F-41502-velos-complets-bmx-race/P-217600-bmx_race_inspyre_evo_expert_noir_jaune_2017",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-241972-vtc_semi_rigide_trek_ds_2_700c_shimano_acera_8v_rouge_2017",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-251284-vtc_semi_rigide_trek_ds_4_700c_shimano_deore_slx_10v_noir_2017",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-211420-vtc_femme_trek_2017_neko_2_wsd_shimano_8v_bleu",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-160388-arcade_2016_velo_electrique_e_colors_300wh_blanc",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-290857-velo_de_ville_electrique_femme_gitane_organ_e_bike_700_mm_shimano_altus_8v_blanc",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-286321-velo_de_ville_electrique_gitane_e_salsa_panache_8v_noir_2018",
+        "https://www.alltricks.fr/F-41503-velos-complets-enfants/P-174971-rebel_kidz_2016_draisienne_air_classic_12_5",
+        "https://www.alltricks.fr/F-41503-velos-complets-enfants/P-145890-trek_2017_velo_enfant_24___precaliber_24_girls_violet",
+        "https://www.alltricks.fr/F-41503-velos-complets-enfants/P-101354-lombardo_velo_enfant_monopoli_12___noir_rouge_jaune",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-278729-velo_de_ville_homme_6ku_odyssey_shimano_altus_8v_gris_2018",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-283572-electra_beach_cruiser_townie_balloon_8d_eq_bleu_navy",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-284804-velo_de_ville_electra_loft_3i_blanc",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-279589-velo_pliant_20___classic_blanc_tc_34_cm_ks_cycling",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-279513-velo_pliant__20___classic_noir_tc_34_cm_ks_cycling",
+        "https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-163580-dahon_velo_pliant_vybe_d7_20___blanc"
         ]
-#https://www.alltricks.fr/C-135194-destockage-velos-complets/I-Page2_20?PageSpeed=noscript#
+
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
+
     def parse(self, response):        
         item = ScraperItemVelo()
-
-        # extraction de la page suivante sur la page courante et envoit au parser
-        # extraction de la page suivante sur la page courante et envoit au parser
-        total_job = '500' #''.join(response.xpath('//input[@name="listRequisition.nbElements"]/@value').extract())
-        next_page_num = int(math.ceil(float(total_job)/20))
-        print 'PAGE ' + str(next_page_num)
-        for i in range(1, next_page_num + 1):
-            url_list = 'https://www.alltricks.fr/C-135194-destockage-velos-complets/I-Page'+ str(i) +'_20?PageSpeed=noscript'
-            print 'PAGE ' + url_list
-            yield scrapy.Request(url_list, callback=self.parse)
-
-        # extraction de toutes les URL des annonces et parsing de celles-ci
-        #pieces = response.xpath('//figure[@class="productResult__img"]')
-        for velo in response.xpath('//div[@class="alltricks-Product  alltricks-Product--grid"]/a'):
-            url_velo = velo.xpath('@href').extract()[0]
-            yield scrapy.Request('https://www.alltricks.fr'+ url_velo, callback=self.parse_item, meta=dict(item=item))
+        yield scrapy.Request(response.url, callback=self.parse_item, meta=dict(item=item)) 
 
     def parse_item(self, response):
+
+        cadre = ['Semi-rigide','Tout suspendu']
+        mateiaux = ['Aluminium','Acier','Acier','carbone']
+        pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
+        style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
+        genre = ['femme','homme','adulte','enfant','fille','garçon']
+
         item = response.meta['item']
         item['site'] = 'alltricks'
         item['url'] = response.url
 
-        titreVelo = scrapy.Field() #xtc advanced 3
+        titreVelo = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()#xtc advanced 3
         photoVelo  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
-        descriptionVelo= scrapy.Field()
+        descriptionVelo= cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
 
-        universVelo = scrapy.Field() #VTT
-        cadreVelo = scrapy.Field() #semi rigide
+        universVelo = ''.join(response.xpath('//*[@id="content-product"]/div[1]/div/ol/li[last()-1]/a/text()').extract()).strip() #VTT
+        cadreVelo = findCritere(cadre,titreVelo) #semi rigide
 
-        pratiqueVelo = scrapy.Field() #Cross-country
-        genreVelo = scrapy.Field() #homme
+        #pratiqueVelo = scrapy.Field() #Cross-country
+        #genreVelo = scrapy.Field() #homme
     
-        marqueVelo = ''.join(response.xpath('//*[@id="product-header-order-brand"]/a/img/@alt').extract()).strip()
+        marqueVelo = ''.join(response.xpath('//*[@id="product-header-order-brand"]/img/@alt').extract()).strip()
     
     
-        matieriauxVelo = scrapy.Field() #carbone
+        matieriauxVelo = '' #carbone
     
-        poidsVelo = scrapy.Field() 
+        #poidsVelo = scrapy.Field() 
         prixVelo =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
     
 
-        tailleUserVelo = scrapy.Field() #M
-        tailleRoueVelo= scrapy.Field()
+        #tailleUserVelo = scrapy.Field() #M
+        #tailleRoueVelo= scrapy.Field()
 
 
 
 
         #item['typeVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/text()').extract()).strip().encode('utf-8').replace("Vélo ", "").replace(" >", "")
         #item['genreVelo'] = ''.join(response.xpath('//*[@id="blocindexmainline"]/div[1]/font/a/text()').extract()).strip()
-        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/a/img/@alt').extract()).strip()
-        item['modeleVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()
-        item['tailleVelo'] = 'Au choix'
-        item['matiereVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[1]/td[2]/text()').extract()).strip()
-        item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
-        item['prixVelo'] =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
-        item['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
-        item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
-        item['descriptionVelo']= ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[7]/p/text()').extract()).strip().replace(", ", " ")
+        #item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]/a/img/@alt').extract()).strip()
+        #item['modeleVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()
+        #item['tailleVelo'] = 'Au choix'
+        #item['matiereVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[1]/td[2]/text()').extract()).strip()
+        #item['poidsVelo'] = ''.join(response.xpath('//*[@id="product-description"]/div[3]/div[9]/table/tbody/tr[21]/td[2]/text()').extract()).strip()
+        #item['prixVelo'] =  ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[2]/text()').extract()).strip().encode('utf-8').replace("Prix public conseillé     ", "")
+        vitem['prixPromotionVelo'] = ''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()
+        #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
+
  
         yield item
+
+
+    def cleanhtml(raw_html):
+        cleanr = re.compile('<.*?>')
+        cleantext = re.sub(cleanr, '', raw_html)
+        return cleantext
+
+    def findCritere(liste, texte):
+       for word in liste:
+            if texte.index(word) > 0
+                return word
+            else
+                return ''
