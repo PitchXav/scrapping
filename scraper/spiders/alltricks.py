@@ -87,34 +87,34 @@ class alltricksSpider(scrapy.Spider):
         item['site'] = 'alltricks'
         item['url'] = response.url
 
-        item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()#xtc advanced 3
+        item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
         item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
-        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
+        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip())
         item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
         item['styleVelo'] = findCritere(style, item['titreVelo']) # #VTT
 
-        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']) #Cross-country
+        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']).replace('\n', '') #Cross-country
         if not item['pratiqueVelo']:
-            item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']) #Cross-country
+            item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']).replace('\n', '') #Cross-country
 
-        item['genreVelo'] = findCritere(genre, item['titreVelo']) #homme
+        item['genreVelo'] = findCritere(genre, item['titreVelo']).replace('\n', '') #homme
         if not item['genreVelo']:
-            item['genreVelo'] = findCritere(genre, item['descriptionVelo']) #homme
+            item['genreVelo'] = findCritere(genre, item['descriptionVelo']).replace('\n', '') #homme
 
 
-        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip()
+        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
 
         
-        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]|th[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
+        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]|th[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()).replace('\n', '') #carbone
         if not item['genreVelo']:
-            item['matieriauxVelo'] = findCritere(materiaux, item['descriptionVelo']) #homme
+            item['matieriauxVelo'] = findCritere(materiaux, item['descriptionVelo']).replace('\n', '') #homme
 
         #tailleUserVelo = 
-        item['tailleRoueVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip())
+        item['tailleRoueVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip()).replace('\n', '')
 
-        item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip())
-        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip())
+        item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
+        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '')
 
  
         yield item
