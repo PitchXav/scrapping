@@ -61,7 +61,7 @@ class alltricksSpider(scrapy.Spider):
         def cleanhtml(texte):
             cleanr = re.compile('<.*?>')
             cleantext = re.sub(cleanr, '', texte)
-            return cleantext
+            return cleantext.replace(", ", " ")
 
         def cleanSpace(texte):
             cleanr = re.compile('[\s+]')
