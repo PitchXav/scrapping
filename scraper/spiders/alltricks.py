@@ -43,12 +43,6 @@ class alltricksSpider(scrapy.Spider):
 
     def parse_item(self, response):
 
-        def suppAccent(texte):
-            s1 = unicode(texte,'utf-8')
-            retour = unicodedata.normalize('NFD', s1).encode('ascii', 'ignore')  
-            print retour   
-            return retour
-
         def cleanhtml(texte):
             cleanr = re.compile('<.*?>')
             cleantext = re.sub(cleanr, '', texte)
@@ -62,7 +56,7 @@ class alltricksSpider(scrapy.Spider):
         def findCritere(liste, texte):
             retour = 'n.c'
             for word in liste:
-                if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
+                if re.search(word, texte, re.UNICODE):
                     retour = word
             return retour
 
