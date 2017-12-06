@@ -41,6 +41,12 @@ class alltricksSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse_item)
 
     def parse_item(self, response):
+
+        def suppAccent(texte):
+            retour = unicode(texte,'utf-8')
+            retour = unicodedata.normalize('NFD', s1).encode('ascii', 'ignore')     
+            return retour
+
         def cleanhtml(texte):
             cleanr = re.compile('<.*?>')
             cleantext = re.sub(cleanr, '', texte)
@@ -54,9 +60,11 @@ class alltricksSpider(scrapy.Spider):
         def findCritere(liste, texte):
             retour = 'n.c'
             for word in liste:
-                if re.search(word.encode('utf-8') , texte.encode('utf-8') , re.IGNORECASE):
+                if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
                     retour = word
             return retour
+
+
 
         item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout-suspendu']
