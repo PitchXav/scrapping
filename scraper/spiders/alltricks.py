@@ -66,31 +66,30 @@ class alltricksSpider(scrapy.Spider):
         def cleanSpace(texte):
             cleanr = re.compile('[\s+]')
             cleantext = re.sub(cleanr, '', texte)
-            return cleantext
+            return cleantext.replace(", ", " ")
 
         def findCritere(liste, texte):
             retour = 'n.c'
             for word in liste:
                 if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
-                    retour = word
+                    retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
             return retour
 
 
         item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout-suspendu']
-        materiaux = ['Aluminium','Acier','carbone']
+        materiaux = ['Aluminium','Acier','Carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
-        genre = ['femme','homme','adulte','enfant','fille','garçon']
+        genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
 
         item['site'] = 'alltricks'
         item['url'] = response.url
 
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()#xtc advanced 3
         item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
-        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip()) + cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]').extract()).strip()) 
-
+        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
         item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
         item['styleVelo'] = findCritere(style, item['titreVelo']) # #VTT
@@ -105,7 +104,11 @@ class alltricksSpider(scrapy.Spider):
 
 
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip()
+
+        
         item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]|th[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
+        if not item['genreVelo']:
+            item['matieriauxVelo'] = findCritere(materiaux, item['descriptionVelo']) #homme
 
         #tailleUserVelo = 
         item['tailleRoueVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip())
