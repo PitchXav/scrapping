@@ -114,7 +114,7 @@ class alltricksSpider(scrapy.Spider):
         item['tailleRoueVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip()).replace('\n', '').replace('\'', '')
 
         item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
-        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '')
+        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.')
 
  
         yield item
