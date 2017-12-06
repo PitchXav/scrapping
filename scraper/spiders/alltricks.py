@@ -89,7 +89,7 @@ class alltricksSpider(scrapy.Spider):
 
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip()#xtc advanced 3
         item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
-        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip())
+        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]/p[1]').extract()).strip()) + cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]').extract()).strip()) 
 
         item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
         item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
@@ -105,7 +105,7 @@ class alltricksSpider(scrapy.Spider):
 
 
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip()
-        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
+        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]|th[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()) #carbone
 
         #tailleUserVelo = 
         item['tailleRoueVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip())
