@@ -44,7 +44,7 @@ class alltricksSpider(scrapy.Spider):
     def parse_item(self, response):
 
         def suppAccent(texte):
-            chaine = texte
+            chaine = texte.encode('ascii','ignore')
             accent = ['é', 'è', 'ê', 'à', 'ù', 'û', 'ç', 'ô', 'î', 'ï', 'â']
             sans_accent = ['e', 'e', 'e', 'a', 'u', 'u', 'c', 'o', 'i', 'i', 'a']
  
