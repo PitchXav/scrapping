@@ -54,7 +54,7 @@ class alltricksSpider(scrapy.Spider):
         def findCritere(liste, texte):
             retour = 'n.c'
             for word in liste:
-                if re.search(word.decode('utf-8') , texte.decode('utf-8') , re.IGNORECASE):
+                if re.search(word.encode('utf-8') , texte.encode('utf-8') , re.IGNORECASE):
                     retour = word
             return retour
 
