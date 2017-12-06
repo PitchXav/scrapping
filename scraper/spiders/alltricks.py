@@ -50,7 +50,7 @@ class alltricksSpider(scrapy.Spider):
  
             for i in xrange(len(accent)):
                 chaine = chaine.replace(accent[i], sans_accent[i])  
-            return retour
+            return chaine
 
         def cleanhtml(texte):
             cleanr = re.compile('<.*?>')
@@ -76,7 +76,7 @@ class alltricksSpider(scrapy.Spider):
         materiaux = ['Aluminium','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
-        univers = ['VTT','VTC','Velo de ville','BMX','Velo de Route','electrique','Velo Pliant','Enfant']
+        univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon']
 
         item['site'] = 'alltricks'
