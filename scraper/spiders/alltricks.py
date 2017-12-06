@@ -6,6 +6,12 @@ import re
 from itertools import groupby
 from scrapy.conf import settings
 from scraper.items_velo import ScraperItemVelo
+import sys
+
+
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 
 class alltricksSpider(scrapy.Spider):
     name = "alltricks"
