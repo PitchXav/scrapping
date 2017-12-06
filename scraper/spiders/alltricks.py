@@ -44,8 +44,9 @@ class alltricksSpider(scrapy.Spider):
     def parse_item(self, response):
 
         def suppAccent(texte):
-            retour = unicode(texte,'utf-8')
-            retour = unicodedata.normalize('NFD', s1).encode('ascii', 'ignore')     
+            s1 = unicode(texte,'utf-8')
+            retour = unicodedata.normalize('NFD', s1).encode('ascii', 'ignore')  
+            print retour   
             return retour
 
         def cleanhtml(texte):
