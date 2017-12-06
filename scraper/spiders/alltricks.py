@@ -44,12 +44,12 @@ class alltricksSpider(scrapy.Spider):
     def parse_item(self, response):
 
         def suppAccent(texte):
-            if isinstance(unicode_or_str, texte):
-                text = unicode_or_str
-            else:
-                text = unicode_or_str.decode(encoding)
-            retour = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore')
-            print retour   
+            chaine = texte
+            accent = ['é', 'è', 'ê', 'à', 'ù', 'û', 'ç', 'ô', 'î', 'ï', 'â']
+            sans_accent = ['e', 'e', 'e', 'a', 'u', 'u', 'c', 'o', 'i', 'i', 'a']
+ 
+            for i in xrange(len(accent)):
+                chaine = chaine.replace(accent[i], sans_accent[i])  
             return retour
 
         def cleanhtml(texte):
@@ -76,7 +76,7 @@ class alltricksSpider(scrapy.Spider):
         materiaux = ['Aluminium','Acier','carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
-        univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
+        univers = ['VTT','VTC','Velo de ville','BMX','Velo de Route','electrique','Velo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon']
 
         item['site'] = 'alltricks'
