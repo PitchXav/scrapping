@@ -70,7 +70,6 @@ class alltricksSpider(scrapy.Spider):
             return retour
 
 
-
         item = ScraperItemVelo()
         cadre = ['Semi-rigide','Tout-suspendu']
         materiaux = ['Aluminium','Acier','carbone']
