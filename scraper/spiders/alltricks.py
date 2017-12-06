@@ -88,11 +88,11 @@ class alltricksSpider(scrapy.Spider):
         item['url'] = response.url
 
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
-        item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip()
-        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip())
-        item['universVelo'] = findCritere(univers, item['titreVelo']) # #VTT
-        item['cadreVelo'] = findCritere(cadre, item['titreVelo']) #semi rigide
-        item['styleVelo'] = findCritere(style, item['titreVelo']) # #VTT
+        item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
+        item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip()).replace('\n', '')
+        item['universVelo'] = findCritere(univers, item['titreVelo']).replace('\n', '') # #VTT
+        item['cadreVelo'] = findCritere(cadre, item['titreVelo']).replace('\n', '') #semi rigide
+        item['styleVelo'] = findCritere(style, item['titreVelo']).replace('\n', '') # #VTT
 
         item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']).replace('\n', '') #Cross-country
         if not item['pratiqueVelo']:
