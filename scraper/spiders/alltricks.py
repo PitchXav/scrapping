@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import scrapy
+import unicodedata
 import re
 from itertools import groupby
 from scrapy.conf import settings
