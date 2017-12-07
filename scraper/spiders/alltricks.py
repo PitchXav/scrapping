@@ -83,40 +83,31 @@ class alltricksSpider(scrapy.Spider):
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
+        roues = ['26','27.5','29']
+
 
         item['site'] = 'alltricks'
         item['url'] = response.url
 
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
-        item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
         item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip()).replace('\n', '')
-        item['universVelo'] = findCritere(univers, item['titreVelo']).replace('\n', '') # #VTT
-        item['cadreVelo'] = findCritere(cadre, item['titreVelo']).replace('\n', '') #semi rigide
-        item['styleVelo'] = findCritere(style, item['titreVelo']).replace('\n', '') # #VTT
-
-        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']).replace('\n', '') #Cross-country
-        if not item['pratiqueVelo']:
-            item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']).replace('\n', '') #Cross-country
-
-        item['genreVelo'] = findCritere(genre, item['titreVelo']).replace('\n', '') #homme
-        if not item['genreVelo']:
-            item['genreVelo'] = findCritere(genre, item['descriptionVelo']).replace('\n', '') #homme
-
-
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
-
-
-        item['matieriauxVelo'] = findCritere(materiaux,''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Cadre")]|th[contains(., "Cadre")]/td[2]|th[2]').extract()).strip()).replace('\n', '') #carbone
-        if not item['genreVelo']:
-            item['matieriauxVelo'] = findCritere(materiaux, item['descriptionVelo']).replace('\n', '') #homme
-
-        #tailleUserVelo = 
-        item['tailleRoueVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-specifications-table"]//tr[contains(., "Taille de Roues")]/td[2]|th[2]/text()').extract()).strip()).replace('\n', '').replace('\'', '')
-
-        item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
         item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', ''))
 
-		item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip()).replace('\n', '')[0:250]
+        textaAnalyser = cleanhtml(item['titreVelo'] + item['descriptionVelo'])
+
+        item['universVelo'] = findCritere(univers, textaAnalyser.replace('\n', '') # #VTT
+        item['cadreVelo'] = findCritere(cadre, textaAnalyser.replace('\n', '') #semi rigide
+        item['styleVelo'] = findCritere(style, textaAnalyser).replace('\n', '') # #VTT
+        item['pratiqueVelo'] = findCritere(pratique, textaAnalyser).replace('\n', '') #Cross-country
+        item['genreVelo'] = findCritere(genre, textaAnalyser).replace('\n', '') #homme
+        item['matieriauxVelo'] = findCritere(materiaux,textaAnalyser).extract()).strip()).replace('\n', '') #carbone
+        item['tailleRoueVelo'] = findCritere(roues,textaAnalyser).extract()).strip()).replace('\n', '') #carbone
+        
+
+        #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
+        #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
+		#item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip()).replace('\n', '')[0:250]
 
         yield item
 
