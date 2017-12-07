@@ -80,6 +80,7 @@ class alltricksSpider(scrapy.Spider):
             print 'findDoubleCritere' + texte
             for l in liste:
                 if (liste[l]):
+                    print 'liste[l]' + texte
                     retour = liste[l]
             return retour
 
