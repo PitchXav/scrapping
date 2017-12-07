@@ -97,13 +97,33 @@ class alltricksSpider(scrapy.Spider):
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ item['descriptionVelo'])
         print textaAnalyser
 
-        item['universVelo'] = findCritere(univers, textaAnalyser) # #VTT
-        item['cadreVelo'] = findCritere(cadre, textaAnalyser)#semi rigide
-        item['styleVelo'] = findCritere(style, textaAnalyser) # #VTT
-        item['pratiqueVelo'] = findCritere(pratique, textaAnalyser) #Cross-country
-        item['genreVelo'] = findCritere(genre, textaAnalyser) #homme
-        item['matieriauxVelo'] = findCritere(materiaux,textaAnalyser) #carbone
-        item['tailleRoueVelo'] = findCritere(roues,textaAnalyser) #26
+        item['universVelo'] = findCritere(univers, item['titreVelo'])
+        if not (item['universVelo'])
+            item['universVelo'] = findCritere(univers, item['descriptionVelo'])
+
+        item['cadreVelo'] = findCritere(cadre, item['titreVelo'])
+        if not (item['cadreVelo'])
+            item['cadreVelo'] = findCritere(cadre, item['descriptionVelo']) 
+
+        item['styleVelo'] = findCritere(style, item['titreVelo'])
+        if not (item['styleVelo'])
+            item['styleVelo'] = findCritere(style, item['descriptionVelo']) 
+
+        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo'])
+        if not (item['pratiqueVelo'])
+            item['pratiqueVelo'] = findCritere(pratique, item['descriptionVelo']) 
+
+        item['genreVelo'] = findCritere(genre, item['titreVelo'])
+        if not (item['genreVelo'])
+            item['genreVelo'] = findCritere(genre, item['descriptionVelo']) 
+
+        item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'])
+        if not (item['matieriauxVelo'])
+            item['matieriauxVelo'] = findCritere(materiaux, item['descriptionVelo']) 
+
+        item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'])
+        if not (item['tailleRoueVelo'])
+            item['tailleRoueVelo'] = findCritere(roues, item['descriptionVelo']) 
         
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
