@@ -69,7 +69,7 @@ class alltricksSpider(scrapy.Spider):
             return cleantext.replace(", ", " ")
 
         def findCritere(liste, texte):
-            retour = 'n.c'
+            retour = ''
             for word in liste:
                 if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
