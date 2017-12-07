@@ -78,7 +78,7 @@ class alltricksSpider(scrapy.Spider):
         def findDoubleCritere(liste, texte):
             retour = ''
             for l in liste:
-                retour liste[l]
+                retour = liste[l]
             return retour
 
 
