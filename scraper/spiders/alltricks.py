@@ -96,14 +96,14 @@ class alltricksSpider(scrapy.Spider):
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ item['descriptionVelo'])
         print textaAnalyser
-        
-        item['universVelo'] = findCritere(univers, textaAnalyser.replace('\n', '') # #VTT
-        item['cadreVelo'] = findCritere(cadre, textaAnalyser.replace('\n', '') #semi rigide
-        item['styleVelo'] = findCritere(style, textaAnalyser).replace('\n', '') # #VTT
-        item['pratiqueVelo'] = findCritere(pratique, textaAnalyser).replace('\n', '') #Cross-country
-        item['genreVelo'] = findCritere(genre, textaAnalyser).replace('\n', '') #homme
-        item['matieriauxVelo'] = findCritere(materiaux,textaAnalyser).extract()).strip()).replace('\n', '') #carbone
-        item['tailleRoueVelo'] = findCritere(roues,textaAnalyser).extract()).strip()).replace('\n', '') #carbone
+
+        item['universVelo'] = findCritere(univers, textaAnalyser) # #VTT
+        item['cadreVelo'] = findCritere(cadre, textaAnalyser)#semi rigide
+        item['styleVelo'] = findCritere(style, textaAnalyser) # #VTT
+        item['pratiqueVelo'] = findCritere(pratique, textaAnalyser) #Cross-country
+        item['genreVelo'] = findCritere(genre, textaAnalyser) #homme
+        item['matieriauxVelo'] = findCritere(materiaux,textaAnalyser) #carbone
+        item['tailleRoueVelo'] = findCritere(roues,textaAnalyser) #carbone
         
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
