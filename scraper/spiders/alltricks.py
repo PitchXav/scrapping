@@ -80,7 +80,7 @@ class alltricksSpider(scrapy.Spider):
             print 'findDoubleCritere' + texte
             for l in liste:
                 if (liste[l]):
-                    print 'liste[l]' + texte
+                    print 'liste[l]' + liste[l]
                     retour = liste[l]
             return retour
 
@@ -149,8 +149,6 @@ class alltricksSpider(scrapy.Spider):
         if not (item['ageVelo']):
             item['ageVelo'] = findDoubleCritere(ageEnfant, item['ageVelo']) 
 
-
-        
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
         #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
