@@ -77,7 +77,7 @@ class alltricksSpider(scrapy.Spider):
 
         def findDoubleCritere(liste, texte):
             retour = ''
-            print texte
+            print 'findDoubleCritere' + texte
             for l in liste:
                 if (liste[l]):
                     retour = liste[l]
@@ -113,7 +113,6 @@ class alltricksSpider(scrapy.Spider):
         item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ descriptionVelo)
-        print textaAnalyser
 
         item['universVelo'] = findCritere(univers, item['titreVelo'])
         if not (item['universVelo']):
