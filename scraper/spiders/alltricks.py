@@ -92,9 +92,9 @@ class alltricksSpider(scrapy.Spider):
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
         item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip()).replace('\n', '')
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
-        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', ''))
+        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
 
-        textaAnalyser = cleanhtml(item['titreVelo'] + item['descriptionVelo'])
+        textaAnalyser = cleanhtml(item['titreVelo'] +' '+ item['descriptionVelo'])
 
         item['universVelo'] = findCritere(univers, textaAnalyser.replace('\n', '') # #VTT
         item['cadreVelo'] = findCritere(cadre, textaAnalyser.replace('\n', '') #semi rigide
