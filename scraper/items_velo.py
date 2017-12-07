@@ -36,4 +36,4 @@ class ScraperItemVelo(scrapy.Item):
     
 
     #tailleUserVelo = scrapy.Field() #M
-    #tailleRoueVelo= scrapy.Field()
+    tailleRoueVelo= scrapy.Field()
