@@ -77,6 +77,7 @@ class alltricksSpider(scrapy.Spider):
 
         def findDoubleCritere(liste, texte):
             retour = ''
+            print texte
             for l in liste:
                 if (liste[l]):
                     retour = liste[l]
@@ -142,7 +143,7 @@ class alltricksSpider(scrapy.Spider):
         if not (item['tailleRoueVelo']):
             item['tailleRoueVelo'] = findCritere(roues, descriptionVelo) 
 
-        item['ageVelo'] = findCritere(pratique, item['titreVelo'])
+        item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'])
         if not (item['ageVelo']):
             item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo) 
         if not (item['ageVelo']):
