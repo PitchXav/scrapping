@@ -75,15 +75,30 @@ class alltricksSpider(scrapy.Spider):
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
             return retour
 
+        def findCritereEnfant(liste, texte):
+            retour = 'n.c'
+            for word in liste:
+                if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
+                    retour = word.replace('hardtail','Semi-rigide').replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
+            return retour
+
 
         item = ScraperItemVelo()
-        cadre = ['Semi-rigide','Tout-suspendu']
+        cadre = ['Semi-rigide','Tout-suspendu','hardtail']
         materiaux = ['Aluminium','Acier','Carbone']
-        pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat','Trail']
+        pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat','Trail','Route']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
         roues = ['26','27.5','29']
+
+        #####taille vélo enfant#####
+        ##14 pouces --> 3 à 5 ans
+        ##16 pouces --> 4 à 5 ans
+        ##20 pouces --> 6 à 7 ans
+        ##24 pouces --> +8 ans
+        ##draisienne --> 2 ans
+        ############################
 
 
         item['site'] = 'alltricks'
