@@ -75,11 +75,10 @@ class alltricksSpider(scrapy.Spider):
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
             return retour
 
-        def findCritereEnfant(liste, texte):
-            retour = 'n.c'
-            for word in liste:
-                if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
-                    retour = word.replace('hardtail','Semi-rigide').replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
+        def findDoubleCritere(liste, texte):
+            retour = ''
+            for l in liste:
+                retour liste[l]
             return retour
 
 
@@ -90,6 +89,8 @@ class alltricksSpider(scrapy.Spider):
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
+        tailleEnfant = {'draisienne', '14 pouces', '16 pouces','20 pouces','24 pouces'}
+        ageEnfant = {'draisienne':'2 ans', '14 pouces':'3 à 5 ans', '16 pouces':'4 à 5 ans','20 pouces':'6 à 7 ans','24 pouces':'+8 ans'}
         roues = ['26','27.5','29']
 
         #####taille vélo enfant#####
@@ -139,6 +140,14 @@ class alltricksSpider(scrapy.Spider):
         item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'])
         if not (item['tailleRoueVelo']):
             item['tailleRoueVelo'] = findCritere(roues, item['descriptionVelo']) 
+
+        item['ageVelo'] = findCritere(pratique, item['titreVelo'])
+        if not (item['ageVelo']):
+            item['ageVelo'] = findCritere(tailleEnfant, item['descriptionVelo']) 
+        if not (item['ageVelo']):
+            item['ageVelo'] = findDoubleCritere(ageEnfant, item['ageVelo']) 
+
+
         
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
