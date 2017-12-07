@@ -95,7 +95,8 @@ class alltricksSpider(scrapy.Spider):
         item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ item['descriptionVelo'])
-
+        print textaAnalyser
+        
         item['universVelo'] = findCritere(univers, textaAnalyser.replace('\n', '') # #VTT
         item['cadreVelo'] = findCritere(cadre, textaAnalyser.replace('\n', '') #semi rigide
         item['styleVelo'] = findCritere(style, textaAnalyser).replace('\n', '') # #VTT
