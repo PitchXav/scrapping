@@ -72,7 +72,7 @@ class alltricksSpider(scrapy.Spider):
             retour = ''
             for word in liste:
                 if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
-                     print 'findCritere' + origine
+                     print 'findCritere'
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon').replace('hardtail','Semi-rigide')
             return retour
 
@@ -81,7 +81,7 @@ class alltricksSpider(scrapy.Spider):
             print 'findDoubleCritere' + texte + response.url
             if (texte):
                 for key,value in liste.items():
-                    if key == texte:
+                    if (key == texte and univers == 'enfant'):
                         print 'liste[l]' + value
                         retour = value
             return retour
