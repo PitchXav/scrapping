@@ -53,7 +53,6 @@ class alltricksSpider(scrapy.Spider):
             chaine = texte.encode('ascii','ignore')
             accent = ['é', 'è', 'ê', 'à', 'ù', 'û', 'ç', 'ô', 'î', 'ï', 'â']
             sans_accent = ['e', 'e', 'e', 'a', 'u', 'u', 'c', 'o', 'i', 'i', 'a']
- 
             for i in xrange(len(accent)):
                 chaine = chaine.replace(accent[i], sans_accent[i])  
             return chaine
@@ -71,8 +70,8 @@ class alltricksSpider(scrapy.Spider):
         def findCritere(liste, texte, origine):
             retour = ''
             for word in liste:
-                if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
-                     print 'findCritere' + origine
+                if re.search(suppAccent(word), suppAccent(texte), re.IGNORECASE):
+                    print 'findCritere' + origine
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
             return retour
 
