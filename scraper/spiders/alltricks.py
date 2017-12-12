@@ -73,7 +73,7 @@ class alltricksSpider(scrapy.Spider):
             for word in liste:
                 if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
                      print 'findCritere' + origine
-                    retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
+                    retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon').replace('hardtail','Semi-rigide')
             return retour
 
         def findDoubleCritereEnfant(liste, texte,univers):
