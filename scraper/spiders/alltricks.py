@@ -116,40 +116,40 @@ class alltricksSpider(scrapy.Spider):
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ descriptionVelo)
 
-        item['universVelo'] = findCritere(univers, item['titreVelo'],'titre')
+        item['universVelo'] = findCritere(univers, item['titreVelo'], 'titre')
         if not (item['universVelo']):
-            item['universVelo'] = findCritere(univers, descriptionVelo,'description')
+            item['universVelo'] = findCritere(univers, descriptionVelo, 'description')
 
-        item['cadreVelo'] = findCritere(cadre, item['titreVelo'],'titre')
+        item['cadreVelo'] = findCritere(cadre, item['titreVelo'], 'titre')
         if not (item['cadreVelo']):
-            item['cadreVelo'] = findCritere(cadre, descriptionVelo,'description') 
+            item['cadreVelo'] = findCritere(cadre, descriptionVelo, 'description') 
 
-        item['styleVelo'] = findCritere(style, item['titreVelo'],'titre')
+        item['styleVelo'] = findCritere(style, item['titreVelo'], 'titre')
         if not (item['styleVelo']):
-            item['styleVelo'] = findCritere(style, descriptionVelo,'description') 
+            item['styleVelo'] = findCritere(style, descriptionVelo, 'description') 
 
-        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo'],'titre')
+        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo'], 'titre')
         if not (item['pratiqueVelo']):
-            item['pratiqueVelo'] = findCritere(pratique, descriptionVelo,'description') 
+            item['pratiqueVelo'] = findCritere(pratique, descriptionVelo, 'description') 
 
-        item['genreVelo'] = findCritere(genre, item['titreVelo'],'titre')
+        item['genreVelo'] = findCritere(genre, item['titreVelo'], 'titre')
         if not (item['genreVelo']):
-            item['genreVelo'] = findCritere(genre, descriptionVelo,'description') 
+            item['genreVelo'] = findCritere(genre, descriptionVelo, 'description') 
 
-        item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'],'titre')
+        item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'], 'titre')
         if not (item['matieriauxVelo']):
-            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo,'description') 
+            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo, 'description') 
 
-        item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'],'titre')
+        item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'], 'titre')
         if not (item['tailleRoueVelo']):
-            item['tailleRoueVelo'] = findCritere(roues, descriptionVelo,'description') 
+            item['tailleRoueVelo'] = findCritere(roues, descriptionVelo, 'description') 
 
-        item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'],'titre')
+        item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'], 'titre')
         if not (item['ageVelo']):
-            item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo,'description') 
+            item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo, 'description') 
 
         if (item['ageVelo']):
-            item['ageVelo'] = findDoubleCritereEnfant(ageEnfant, item['ageVelo'],item['universVelo']) 
+            item['ageVelo'] = findDoubleCritereEnfant(ageEnfant, item['ageVelo'], item['universVelo']) 
 
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
