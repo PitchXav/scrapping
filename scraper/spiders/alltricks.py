@@ -78,10 +78,10 @@ class alltricksSpider(scrapy.Spider):
         def findDoubleCritere(liste, texte):
             retour = ''
             print 'findDoubleCritere' + texte
-            for l in liste:
-                if (liste[l]):
-                    print 'liste[l]' + liste[l]
-                    retour = liste[l]
+            for key,value in liste.items():
+                if (key == texte):
+                    print 'liste[l]' + value
+                    retour = value
             return retour
 
 
