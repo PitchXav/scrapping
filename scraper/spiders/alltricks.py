@@ -105,7 +105,6 @@ class alltricksSpider(scrapy.Spider):
         ##draisienne --> 2 ans
         ############################
 
-
         item['site'] = 'alltricks'
         item['url'] = response.url
 
