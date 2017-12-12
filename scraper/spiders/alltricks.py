@@ -68,19 +68,20 @@ class alltricksSpider(scrapy.Spider):
             cleantext = re.sub(cleanr, '', texte)
             return cleantext.replace(", ", " ")
 
-        def findCritere(liste, texte):
+        def findCritere(liste, texte, origine):
             retour = ''
             for word in liste:
                 if re.search(suppAccent(word) , suppAccent(texte), re.IGNORECASE):
+                     print 'findCritere' + origine
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
             return retour
 
-        def findDoubleCritere(liste, texte):
+        def findDoubleCritereEnfant(liste, texte,univers):
             retour = ''
             print 'findDoubleCritere' + texte + response.url
             if (texte):
                 for key,value in liste.items():
-                    if (key == texte):
+                    if (key == texte && univers == 'enfant'):
                         print 'liste[l]' + value
                         retour = value
             return retour
@@ -93,8 +94,8 @@ class alltricksSpider(scrapy.Spider):
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
-        tailleEnfant = {'draisienne', '14 pouces','14\'\'', '16 pouces','16\'\'','20 pouces','20\'\'','24 pouces','24\'\''}
-        ageEnfant = {'draisienne':'2 ans', '14 pouces':'3 à 5 ans','14\'\'' : '3 à 5 ans', '16 pouces':'4 à 5 ans','16\'\'':'4 à 5 ans','20 pouces':'6 à 7 ans','20\'\'':'6 à 7 ans','24 pouces':'+8 ans','24\'\'':'+8 ans'}
+        tailleEnfant = {'draisienne', '12 pouces','12\'\'','14 pouces','14\'\'', '16 pouces','16\'\'','20 pouces','20\'\'','24 pouces','24\'\''}
+        ageEnfant = {'draisienne':'2 ans','12 pouces':'3 à 5 ans','12\'\'' : '3 à 5 ans', '14 pouces':'3 à 5 ans','14\'\'' : '3 à 5 ans', '16 pouces':'4 à 5 ans','16\'\'':'4 à 5 ans','20 pouces':'6 à 7 ans','20\'\'':'6 à 7 ans','24 pouces':'+8 ans','24\'\'':'+8 ans'}
         roues = ['26','27.5','29']
 
         #####taille vélo enfant#####
@@ -116,40 +117,40 @@ class alltricksSpider(scrapy.Spider):
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ descriptionVelo)
 
-        item['universVelo'] = findCritere(univers, item['titreVelo'])
+        item['universVelo'] = findCritere(univers, item['titreVelo'],'titre')
         if not (item['universVelo']):
-            item['universVelo'] = findCritere(univers, descriptionVelo)
+            item['universVelo'] = findCritere(univers, descriptionVelo,'description')
 
-        item['cadreVelo'] = findCritere(cadre, item['titreVelo'])
+        item['cadreVelo'] = findCritere(cadre, item['titreVelo'],'titre')
         if not (item['cadreVelo']):
-            item['cadreVelo'] = findCritere(cadre, descriptionVelo) 
+            item['cadreVelo'] = findCritere(cadre, descriptionVelo,'description') 
 
-        item['styleVelo'] = findCritere(style, item['titreVelo'])
+        item['styleVelo'] = findCritere(style, item['titreVelo'],'titre')
         if not (item['styleVelo']):
-            item['styleVelo'] = findCritere(style, descriptionVelo) 
+            item['styleVelo'] = findCritere(style, descriptionVelo,'description') 
 
-        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo'])
+        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo'],'titre')
         if not (item['pratiqueVelo']):
-            item['pratiqueVelo'] = findCritere(pratique, descriptionVelo) 
+            item['pratiqueVelo'] = findCritere(pratique, descriptionVelo,'description') 
 
-        item['genreVelo'] = findCritere(genre, item['titreVelo'])
+        item['genreVelo'] = findCritere(genre, item['titreVelo'],'titre')
         if not (item['genreVelo']):
-            item['genreVelo'] = findCritere(genre, descriptionVelo) 
+            item['genreVelo'] = findCritere(genre, descriptionVelo,'description') 
 
-        item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'])
+        item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'],'titre')
         if not (item['matieriauxVelo']):
-            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo) 
+            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo,'description') 
 
-        item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'])
+        item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'],'titre')
         if not (item['tailleRoueVelo']):
-            item['tailleRoueVelo'] = findCritere(roues, descriptionVelo) 
+            item['tailleRoueVelo'] = findCritere(roues, descriptionVelo,'description') 
 
-        item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'])
+        item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'],'titre')
         if not (item['ageVelo']):
-            item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo) 
+            item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo,'description') 
 
         if (item['ageVelo']):
-            item['ageVelo'] = findDoubleCritere(ageEnfant, item['ageVelo']) 
+            item['ageVelo'] = findDoubleCritere(ageEnfant, item['ageVelo'],item['universVelo']) 
 
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
