@@ -147,8 +147,8 @@ class alltricksSpider(scrapy.Spider):
         if not (item['ageVelo']):
             item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo, 'description') 
 
-        if (item['ageVelo']):
-            item['ageVelo'] = findDoubleCritereEnfant(ageEnfant, item['ageVelo'], item['universVelo']) 
+        #if (item['ageVelo']):
+            #item['ageVelo'] = findDoubleCritereEnfant(ageEnfant, item['ageVelo'], item['universVelo']) 
 
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
