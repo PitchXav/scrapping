@@ -67,23 +67,13 @@ class alltricksSpider(scrapy.Spider):
             cleantext = re.sub(cleanr, '', texte)
             return cleantext.replace(", ", " ")
 
-        def findCritere(liste, texte, origine):
+        def findCritere(liste, texte):
             retour = ''
             for word in liste:
                 if re.search(suppAccent(word), suppAccent(texte), re.IGNORECASE):
-                    print 'findCritere' + origine
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
             return retour
 
-        def findDoubleCritereEnfant(liste, texte,univers):
-            retour = ''
-            print 'findDoubleCritereEnfant' + texte + response.url
-            if (texte):
-                for key,value in liste.items():
-                    if (key == texte and univers == 'enfant'):
-                        print 'liste[l]' + value
-                        retour = value
-            return retour
 
 
         item = ScraperItemVelo()
@@ -93,8 +83,8 @@ class alltricksSpider(scrapy.Spider):
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
         univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
         genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
-        tailleEnfant = ['draisienne', '12 pouces','12\'\'','14 pouces','14\'\'', '16 pouces','16\'\'','20 pouces','20\'\'','24 pouces','24\'\'']
-        ageEnfant = ['draisienne':'2 ans','12 pouces':'3 à 5 ans','12\'\'' : '3 à 5 ans', '14 pouces':'3 à 5 ans','14\'\'' : '3 à 5 ans', '16 pouces':'4 à 5 ans','16\'\'':'4 à 5 ans','20 pouces':'6 à 7 ans','20\'\'':'6 à 7 ans','24 pouces':'+8 ans','24\'\'':'+8 ans']
+        ##tailleEnfant = ['draisienne', '12 pouces','12\'\'','14 pouces','14\'\'', '16 pouces','16\'\'','20 pouces','20\'\'','24 pouces','24\'\'']
+        ##ageEnfant = ['draisienne':'2 ans','12 pouces':'3 à 5 ans','12\'\'' : '3 à 5 ans', '14 pouces':'3 à 5 ans','14\'\'' : '3 à 5 ans', '16 pouces':'4 à 5 ans','16\'\'':'4 à 5 ans','20 pouces':'6 à 7 ans','20\'\'':'6 à 7 ans','24 pouces':'+8 ans','24\'\'':'+8 ans']
         roues = ['26','27.5','29']
 
         #####taille vélo enfant#####
