@@ -11,34 +11,12 @@ sys.setdefaultencoding('utf8')
 
 
 class alltricksSpider(scrapy.Spider):
-    name = "alltricks"
+    name = "fnac"
 
     def start_requests(self):
         urls = [
-        'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-218385-velo_complet_2017_cube_ltd_pro_29___shimano_xt_11v_vert_noir',
-        'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-285887-vtt_semi_rigide_mondraker_2017_prime__27_5____shimano_slx_10v_noir_jaune',
-        'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-257189-vtt_tout_suspendu_mondraker_2017_factor__27_5____sram_nx1_10v_gris_blanc',
-        'https://www.alltricks.fr/F-41505-velos-route-_-cyclocross-_-triathlon/P-198391-velo_de_route_bmc_2017_teammachine_alr01_shimano_105_11v_gris',
-        'https://www.alltricks.fr/F-41505-velos-route-_-cyclocross-_-triathlon/P-277296-velo_de_route_trek_2017_domane_slr_8_shimano_dura_ace_r9100_11v_noir_argent',
-        'https://www.alltricks.fr/F-41505-velos-route-_-cyclocross-_-triathlon/P-279403-velo_de_triathlon_bmc_2017_timemachine_02_shimano_ultegra_di2_11v_orange_noir',
-        'https://www.alltricks.fr/F-41502-velos-complets-bmx-race/P-217599-bmx_race_inspyre_evo_cruiser_noir_jaune_2017',
-        'https://www.alltricks.fr/F-41502-velos-complets-bmx-race/P-242958-bmx_race_mongoose_title_expert_noir_orange_2017',
-        'https://www.alltricks.fr/F-41502-velos-complets-bmx-race/P-217600-bmx_race_inspyre_evo_expert_noir_jaune_2017',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-241972-vtc_semi_rigide_trek_ds_2_700c_shimano_acera_8v_rouge_2017',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-251284-vtc_semi_rigide_trek_ds_4_700c_shimano_deore_slx_10v_noir_2017',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-211420-vtc_femme_trek_2017_neko_2_wsd_shimano_8v_bleu',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-160388-arcade_2016_velo_electrique_e_colors_300wh_blanc',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-290857-velo_de_ville_electrique_femme_gitane_organ_e_bike_700_mm_shimano_altus_8v_blanc',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-286321-velo_de_ville_electrique_gitane_e_salsa_panache_8v_noir_2018',
-        'https://www.alltricks.fr/F-41503-velos-complets-enfants/P-174971-rebel_kidz_2016_draisienne_air_classic_12_5',
-        'https://www.alltricks.fr/F-41503-velos-complets-enfants/P-145890-trek_2017_velo_enfant_24___precaliber_24_girls_violet',
-        'https://www.alltricks.fr/F-41503-velos-complets-enfants/P-101354-lombardo_velo_enfant_monopoli_12___noir_rouge_jaune',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-278729-velo_de_ville_homme_6ku_odyssey_shimano_altus_8v_gris_2018',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-283572-electra_beach_cruiser_townie_balloon_8d_eq_bleu_navy',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-284804-velo_de_ville_electra_loft_3i_blanc',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-279589-velo_pliant_20___classic_blanc_tc_34_cm_ks_cycling',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-279513-velo_pliant__20___classic_noir_tc_34_cm_ks_cycling',
-        'https://www.alltricks.fr/F-187976-velo-ville_voyage_vtc/P-163580-dahon_velo_pliant_vybe_d7_20___blanc',
+        'https://www.fnac.com/mp26226491/VTT-tout-suspendu-26pouces-Paladin-blanc-vert-TC-51-cm-KS-Cycling/w-4',
+        'https://www.fnac.com/mp26226539/BMX-Freestyle-20pouces-Hedonic-blanc-KS-Cycling/w-4'
         ]
 
         for url in urls:
@@ -102,13 +80,13 @@ class alltricksSpider(scrapy.Spider):
         ##draisienne --> 2 ans
         ############################
 
-        item['site'] = 'alltricks'
+        item['site'] = 'fnac'
         item['url'] = response.url
 
-        item['titreVelo'] = ''.join(response.xpath('//html/body/div[2]/div[1]/section/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
-        descriptionVelo = cleanhtml(''.join(response.xpath('//*[@id="ficheResume"]/div[2]').extract()).strip()).replace('\n', '') + cleanhtml(''.join(response.xpath('//*[@id="specifications"]/div[2]').extract()).strip()).replace('\n', '')
+        item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
+        descriptionVelo = cleanhtml(''.join(response.xpath('//*[@id="product-description"]').extract()).strip()).replace('\n', '')
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
-        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('/html/body/div[2]/div[1]/div[1]/section[1]/ul[2]/li/div[1]/div/div[1]/div/div[2]/div[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
+        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ descriptionVelo)
 
