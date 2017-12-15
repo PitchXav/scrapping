@@ -1,3 +1,20 @@
+Skip to content
+Features
+Business
+Explore
+Marketplace
+Pricing
+This repository
+Search
+Sign in or Sign up
+ Watch 1  Star 0  Fork 0 PitchXav/scrapping
+ Code  Issues 0  Pull requests 0  Projects 0  Insights
+Tree: d4bed1193d Find file Copy pathscrapping/scraper/spiders/alltricks.py
+d4bed11  a day ago
+ Xavier sdf
+1 contributor
+RawBlameHistory      
+127 lines (101 sloc)  7.73 KB
 # -*- coding: utf-8 -*-
 
 import scrapy
@@ -67,13 +84,23 @@ class alltricksSpider(scrapy.Spider):
             cleantext = re.sub(cleanr, '', texte)
             return cleantext.replace(", ", " ")
 
-        def findCritere(liste, texte):
+        def findCritere(liste, texte, origine):
             retour = ''
             for word in liste:
                 if re.search(suppAccent(word), suppAccent(texte), re.IGNORECASE):
+                    print 'findCritere' + origine
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
             return retour
 
+        def findDoubleCritereEnfant(liste, texte,univers):
+            retour = ''
+            print 'findDoubleCritereEnfant' + texte + response.url
+            if (texte):
+                for key,value in liste.items():
+                    if (key == texte and univers == 'enfant'):
+                        print 'liste[l]' + value
+                        retour = value
+            return retour
 
 
         item = ScraperItemVelo()
@@ -95,7 +122,7 @@ class alltricksSpider(scrapy.Spider):
         ##draisienne --> 2 ans
         ############################
 
-        item['site'] = 'alltricks'
+     item['site'] = 'alltricks'
         item['url'] = response.url
 
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
@@ -105,12 +132,43 @@ class alltricksSpider(scrapy.Spider):
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ descriptionVelo)
 
-       
+        item['universVelo'] = findCritere(univers, item['titreVelo'],'titre')
+        if not (item['universVelo']):
+            item['universVelo'] = findCritere(univers, descriptionVelo,'description')
+
+        item['cadreVelo'] = findCritere(cadre, item['titreVelo']'titre')
+        if not (item['cadreVelo']):
+            item['cadreVelo'] = findCritere(cadre, descriptionVelo,'description') 
+
+        item['styleVelo'] = findCritere(style, item['titreVelo']'titre')
+        if not (item['styleVelo']):
+            item['styleVelo'] = findCritere(style, descriptionVelo,'description') 
+
+        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo']'titre')
+        if not (item['pratiqueVelo']):
+            item['pratiqueVelo'] = findCritere(pratique, descriptionVelo,'description') 
+
+        item['genreVelo'] = findCritere(genre, item['titreVelo']'titre')
+        if not (item['genreVelo']):
+            item['genreVelo'] = findCritere(genre, descriptionVelo,'description') 
+
+        item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo']'titre')
+        if not (item['matieriauxVelo']):
+            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo,'description') 
+
+        item['tailleRoueVelo'] = findCritere(roues, item['titreVelo']'titre')
+        if not (item['tailleRoueVelo']):
+            item['tailleRoueVelo'] = findCritere(roues, descriptionVelo,'description') 
+
+        item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo']'titre')
+        if not (item['ageVelo']):
+            item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo,'description') 
+        if not (item['ageVelo']):
+            item['ageVelo'] = findDoubleCritere(ageEnfant, item['ageVelo'],item['universVelo']) 
 
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
         #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
-		#item['descriptionVelo'] = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]//p[1]').extract()).strip()).replace('\n', '')[0:250]
+        item['descriptionVelo'] = cleanhtml(descriptionVelo)[0:250]
 
         yield item
-
