@@ -102,7 +102,7 @@ class alltricksSpider(scrapy.Spider):
         ##draisienne --> 2 ans
         ############################
 
-     item['site'] = 'alltricks'
+        item['site'] = 'alltricks'
         item['url'] = response.url
 
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
