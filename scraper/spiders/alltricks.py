@@ -1,22 +1,3 @@
-Skip to content
-Features
-Business
-Explore
-Marketplace
-Pricing
-This repository
-Search
-Sign in or Sign up
- Watch 1  Star 0  Fork 0 PitchXav/scrapping
- Code  Issues 0  Pull requests 0  Projects 0  Insights
-Tree: d4bed1193d Find file Copy pathscrapping/scraper/spiders/alltricks.py
-d4bed11  a day ago
- Xavier sdf
-1 contributor
-RawBlameHistory      
-127 lines (101 sloc)  7.73 KB
-# -*- coding: utf-8 -*-
-
 import scrapy
 import unicodedata
 import re
@@ -24,7 +5,6 @@ from itertools import groupby
 from scrapy.conf import settings
 from scraper.items_velo import ScraperItemVelo
 import sys
-
 
 reload(sys)
 sys.setdefaultencoding('utf8')
