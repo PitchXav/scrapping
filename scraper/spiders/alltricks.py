@@ -15,6 +15,8 @@ class alltricksSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
+        'https://www.fnac.com/mp26226491/VTT-tout-suspendu-26pouces-Paladin-blanc-vert-TC-51-cm-KS-Cycling/w-4',
+        'https://www.fnac.com/mp26226539/BMX-Freestyle-20pouces-Hedonic-blanc-KS-Cycling/w-4'
         'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-218385-velo_complet_2017_cube_ltd_pro_29___shimano_xt_11v_vert_noir',
         'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-285887-vtt_semi_rigide_mondraker_2017_prime__27_5____shimano_slx_10v_noir_jaune',
         'https://www.alltricks.fr/F-11947-velos-complets-vtt/P-257189-vtt_tout_suspendu_mondraker_2017_factor__27_5____sram_nx1_10v_gris_blanc',
