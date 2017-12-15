@@ -83,10 +83,11 @@ class alltricksSpider(scrapy.Spider):
         item['site'] = 'fnac'
         item['url'] = response.url
 
-        item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
-        descriptionVelo = cleanhtml(''.join(response.xpath('//*[@id="product-description"]').extract()).strip()).replace('\n', '')
+        item['titreVelo'] = ''.join(response.xpath('//html/body/div[2]/div[1]/section/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
+        descriptionVelo = cleanhtml(''.join(response.xpath('//*[@id="ficheResume"]/div[2]').extract()).strip()).replace('\n', '') + cleanhtml(''.join(response.xpath('//*[@id="specifications"]/div[2]').extract()).strip()).replace('\n', '')
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
-        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-header-order-form"]/form/div[2]/div[1]/div[1]/p[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
+        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('/html/body/div[2]/div[1]/div[1]/section[1]/ul[2]/li/div[1]/div/div[1]/div/div[2]/div[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
+
 
         textaAnalyser = cleanhtml(item['titreVelo'] +' '+ descriptionVelo)
 
