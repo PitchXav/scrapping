@@ -15,7 +15,7 @@ class ScraperItemVelo(scrapy.Item):
 
     titreVelo = scrapy.Field() #xtc advanced 3
     #photoVelo  = scrapy.Field()
-    #descriptionVelo= scrapy.Field()
+    descriptionVelo= scrapy.Field()
 
     universVelo = scrapy.Field() #VTT
     cadreVelo = scrapy.Field() #semi rigide
