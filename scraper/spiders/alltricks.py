@@ -77,7 +77,7 @@ class alltricksSpider(scrapy.Spider):
             print 'findDoubleCritereEnfant' + texte + response.url
             if (texte):
                 for key,value in liste.items():
-                    if (key == texte and univers == 'enfant'):
+                    if (key == texte and univers == 'Enfant'):
                         print 'liste[l]' + value
                         retour = value
             return retour
