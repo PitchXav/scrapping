@@ -48,6 +48,7 @@ class alltricksSpider(scrapy.Spider):
                 if re.search(suppAccent(word), suppAccent(texte), re.IGNORECASE):
                     print 'findCritere' + origine
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
+                    break
             return retour
 
         def findDoubleCritereEnfant(liste, texte,univers):
@@ -58,6 +59,7 @@ class alltricksSpider(scrapy.Spider):
                     if (key == texte and univers == 'Enfant'):
                         print 'liste[l]' + value
                         retour = value
+                        break
             return retour
 
 
@@ -97,7 +99,7 @@ class alltricksSpider(scrapy.Spider):
 
         item['cadreVelo'] = findCritere(cadre, item['titreVelo'], 'titre')
         if not (item['cadreVelo']):
-            item['cadreVelo'] = findCritere(cadre, descriptionVelo,'description') 
+            item['cadreVelo'] = findCritere(cadre, descriptionVelo[descriptionVelo.find('cadre'):250],'description') 
 
         item['styleVelo'] = findCritere(style, item['titreVelo'], 'titre')
         if not (item['styleVelo']):
@@ -122,7 +124,8 @@ class alltricksSpider(scrapy.Spider):
         item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'], 'titre')
         if not (item['ageVelo']):
             item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo,'description') 
-        if not (item['ageVelo']):
+
+        if (item['ageVelo']):
             item['ageVelo'] = findDoubleCritereEnfant(ageEnfant, item['ageVelo'],item['universVelo']) 
 
 
