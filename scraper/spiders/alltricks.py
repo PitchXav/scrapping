@@ -90,7 +90,7 @@ class alltricksSpider(scrapy.Spider):
         materiaux = ['Aluminium','Acier','Carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat','Trail','Route']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
-        univers = ['VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant','Enfant']
+        univers = ['Enfant','VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant']
         genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
         tailleEnfant = ['draisienne', '12 pouces','12\'\'','14 pouces','14\'\'', '16 pouces','16\'\'','20 pouces','20\'\'','24 pouces','24\'\'']
         ageEnfant = {'draisienne':'2 ans','12 pouces':'3 à 5 ans','12\'\'' : '3 à 5 ans', '14 pouces':'3 à 5 ans','14\'\'' : '3 à 5 ans', '16 pouces':'4 à 5 ans','16\'\'':'4 à 5 ans','20 pouces':'6 à 7 ans','20\'\'':'6 à 7 ans','24 pouces':'+8 ans','24\'\'':'+8 ans'}
@@ -117,6 +117,7 @@ class alltricksSpider(scrapy.Spider):
         descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/table').extract()).strip()).replace('\n', '')
         descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/table').extract()).strip()).replace('\n', '')
         descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/p').extract()).strip()).replace('\n', '')
+        descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[13]').extract()).strip()).replace('\n', '')
         #######
 
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
