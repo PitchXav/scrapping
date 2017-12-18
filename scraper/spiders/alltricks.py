@@ -138,6 +138,8 @@ class alltricksSpider(scrapy.Spider):
         if not (item['matieriauxVelo']):
             item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[descriptionVelo.lower().find('cadre'):250],'description') 
 
+        print 'descriptionVelo' + descriptionVelo.lower().find('cadre')
+
         item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'], 'titre')
         if not (item['tailleRoueVelo']):
             item['tailleRoueVelo'] = findCritere(roues, descriptionVelo,'description') 
