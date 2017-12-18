@@ -115,7 +115,7 @@ class alltricksSpider(scrapy.Spider):
 
         item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'], 'titre')
         if not (item['matieriauxVelo']):
-            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[descriptionVelo.find('(?i)cadre'):250],'description') 
+            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[descriptionVelo..lower().find('cadre'):250],'description') 
 
         item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'], 'titre')
         if not (item['tailleRoueVelo']):
@@ -124,13 +124,11 @@ class alltricksSpider(scrapy.Spider):
         item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'], 'titre')
         if not (item['ageVelo']):
             item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo,'description') 
-
         if (item['ageVelo']):
             item['ageVelo'] = findDoubleCritereEnfant(ageEnfant, item['ageVelo'],item['universVelo']) 
 
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
         #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
-        item['descriptionVelo'] = cleanhtml(descriptionVelo)[0:250]
-
+        item['descriptionVelo'] = descriptionVelo[descriptionVelo.lower().find('cadre'):250]
         yield item
