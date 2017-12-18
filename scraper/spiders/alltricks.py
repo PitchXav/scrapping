@@ -134,9 +134,11 @@ class alltricksSpider(scrapy.Spider):
         if not (item['genreVelo']):
             item['genreVelo'] = findCritere(genre, descriptionVelo,'description') 
 
+        extractDebut = descriptionVelo.lower().find('cadre')
+
         item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'], 'titre')
         if not (item['matieriauxVelo']):
-            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[descriptionVelo.lower().find('cadre'):250],'description') 
+            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[extractDebut:extractDebut+250],'description') 
 
         print descriptionVelo.lower().find('cadre')
 
@@ -153,6 +155,6 @@ class alltricksSpider(scrapy.Spider):
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
         #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
-        item['descriptionVelo'] = descriptionVelo[descriptionVelo.lower().find('cadre'):250]
+        item['descriptionVelo'] = descriptionVelo[extractDebut:extractDebut+250]
 
         yield item
