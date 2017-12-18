@@ -110,9 +110,13 @@ class alltricksSpider(scrapy.Spider):
         item['titreVelo'] = ''.join(response.xpath('//*[@id="product-header-order-name"]/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
 
         ####Description
-        descriptionVelo = cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]').extract()).strip()).replace('\n', '')
+        descriptionVelo = ''
+        descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[10]').extract()).strip()).replace('\n', '')
         descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[12]').extract()).strip()).replace('\n', '')
         descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/div[11]').extract()).strip()).replace('\n', '')
+        descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/table').extract()).strip()).replace('\n', '')
+        descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/table').extract()).strip()).replace('\n', '')
+        descriptionVelo += cleanhtml(''.join(response.xpath('//*[@id="product-description"]/div[3]/p').extract()).strip()).replace('\n', '')
         #######
 
         item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
@@ -144,7 +148,7 @@ class alltricksSpider(scrapy.Spider):
 
         item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'], 'titre')
         if not (item['matieriauxVelo']):
-            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[extractDebut:extractDebut+500],'description') 
+            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[extractDebut:extractDebut+750],'description') 
 
         print descriptionVelo.lower().find('cadre')
 
@@ -161,6 +165,6 @@ class alltricksSpider(scrapy.Spider):
 
         #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
         #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
-        item['descriptionVelo'] = descriptionVelo[extractDebut:extractDebut+500]
+        item['descriptionVelo'] = descriptionVelo[extractDebut:extractDebut+750]
 
         yield item
