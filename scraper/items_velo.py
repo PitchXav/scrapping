@@ -10,32 +10,34 @@ import scrapy
 
 class ScraperItemVelo(scrapy.Item):
 	# Informations de contact
-    site = scrapy.Field() 
+    objet = scrapy.Field() 
+    distributeur = scrapy.Field() 
     url = scrapy.Field() 
 
-    titreVelo = scrapy.Field() #xtc advanced 3
+    titre = scrapy.Field() #xtc advanced 3
     #photoVelo  = scrapy.Field()
-    descriptionVelo= scrapy.Field()
+    description= scrapy.Field()
 
-    universVelo = scrapy.Field() #VTT
-    cadreVelo = scrapy.Field() #semi rigide
+    modele = scrapy.Field() 
+    univers = scrapy.Field() #VTT
+    cadre = scrapy.Field() #semi rigide
 
-    pratiqueVelo = scrapy.Field() #Cross-country
-    genreVelo = scrapy.Field() #homme
+    pratique = scrapy.Field() #Cross-country
+    genre = scrapy.Field() #homme
     
-    marqueVelo = scrapy.Field() #Giant
+    marque = scrapy.Field() #Giant
     
-    styleVelo = scrapy.Field() #VTT
+    style = scrapy.Field() #VTT
     
-    matieriauxVelo = scrapy.Field() #carbone
+    matieriaux = scrapy.Field() #carbone
     
     #poidsVelo = scrapy.Field() 
-    prixPromotionVelo =  scrapy.Field()
+    prixPromotion =  scrapy.Field()
 
-    ageVelo =  scrapy.Field()
+    age =  scrapy.Field()
     
 
     #tailleUserVelo = scrapy.Field() #M
-    tailleRoueVelo= scrapy.Field()
+    tailleRoue= scrapy.Field()
 
     

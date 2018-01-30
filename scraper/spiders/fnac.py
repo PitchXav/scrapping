@@ -3,7 +3,7 @@ import unicodedata
 import re
 from itertools import groupby
 from scrapy.conf import settings
-from scraper.items_velo import ScraperItemVelo
+from scraper.items_ import ScraperItem
 import sys
 
 reload(sys)
@@ -63,7 +63,7 @@ class alltricksSpider(scrapy.Spider):
             return retour
 
 
-        item = ScraperItemVelo()
+        item = ScraperItem()
         cadre = ['Semi-rigide','Tout-suspendu','hardtail']
         materiaux = ['Aluminium','Acier','Carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat','Trail','Route']
@@ -82,53 +82,54 @@ class alltricksSpider(scrapy.Spider):
         ##draisienne --> 2 ans
         ############################
 
-        item['site'] = 'fnac'
+        item['objet'] = 'velo'
+        item['distributeur'] = 'fnac'
         item['url'] = response.url
 
-        item['titreVelo'] = ''.join(response.xpath('//html/body/div[2]/div[1]/section/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
-        descriptionVelo = cleanhtml(''.join(response.xpath('//*[@id="ficheResume"]/div[2]').extract()).strip()).replace('\n', '') + cleanhtml(''.join(response.xpath('//*[@id="specifications"]/div[2]').extract()).strip()).replace('\n', '')
-        item['marqueVelo'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
-        item['prixPromotionVelo'] = cleanSpace(''.join(response.xpath('/html/body/div[2]/div[1]/div[1]/section[1]/ul[2]/li/div[1]/div/div[1]/div/div[2]/div[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
+        item['titre'] = ''.join(response.xpath('//html/body/div[2]/div[1]/section/h1/text()').extract()).strip().replace('\n', '')#xtc advanced 3
+        description = cleanhtml(''.join(response.xpath('//*[@id="ficheResume"]/div[2]').extract()).strip()).replace('\n', '') + cleanhtml(''.join(response.xpath('//*[@id="specifications"]/div[2]').extract()).strip()).replace('\n', '')
+        item['marque'] = ''.join(response.xpath('//*[@id="product-header-order-brand"]//img/@alt').extract()).strip().replace('\n', '')
+        item['prixPromotion'] = cleanSpace(''.join(response.xpath('/html/body/div[2]/div[1]/div[1]/section[1]/ul[2]/li/div[1]/div/div[1]/div/div[2]/div[1]/span/text()').extract()).strip()).replace('\n', '').replace(',', '.').replace('€', '')
 
 
-        textaAnalyser = cleanhtml(item['titreVelo'] +' '+ descriptionVelo)
+        textaAnalyser = cleanhtml(item['titre'] +' '+ description)
 
-        item['universVelo'] = findCritere(univers, item['titreVelo'],'titre')
-        if not (item['universVelo']):
-            item['universVelo'] = findCritere(univers, descriptionVelo,'description')
+        item['univers'] = findCritere(univers, item['titre'],'titre')
+        if not (item['univers']):
+            item['univers'] = findCritere(univers, description,'description')
 
-        item['cadreVelo'] = findCritere(cadre, item['titreVelo'], 'titre')
-        if not (item['cadreVelo']):
-            item['cadreVelo'] = findCritere(cadre, descriptionVelo,'description') 
+        item['cadre'] = findCritere(cadre, item['titre'], 'titre')
+        if not (item['cadre']):
+            item['cadre'] = findCritere(cadre, description,'description') 
 
-        item['styleVelo'] = findCritere(style, item['titreVelo'], 'titre')
-        if not (item['styleVelo']):
-            item['styleVelo'] = findCritere(style, descriptionVelo,'description') 
+        item['style'] = findCritere(style, item['titre'], 'titre')
+        if not (item['style']):
+            item['style'] = findCritere(style, description,'description') 
 
-        item['pratiqueVelo'] = findCritere(pratique, item['titreVelo'], 'titre')
-        if not (item['pratiqueVelo']):
-            item['pratiqueVelo'] = findCritere(pratique, descriptionVelo,'description') 
+        item['pratique'] = findCritere(pratique, item['titre'], 'titre')
+        if not (item['pratique']):
+            item['pratique'] = findCritere(pratique, description,'description') 
 
-        item['genreVelo'] = findCritere(genre, item['titreVelo'], 'titre')
-        if not (item['genreVelo']):
-            item['genreVelo'] = findCritere(genre, descriptionVelo,'description') 
+        item['genre'] = findCritere(genre, item['titre'], 'titre')
+        if not (item['genre']):
+            item['genre'] = findCritere(genre, description,'description') 
 
-        item['matieriauxVelo'] = findCritere(materiaux, item['titreVelo'], 'titre')
-        if not (item['matieriauxVelo']):
-            item['matieriauxVelo'] = findCritere(materiaux, descriptionVelo[descriptionVelo.lower().find('cadre'):250],'description') 
+        item['matieriaux'] = findCritere(materiaux, item['titre'], 'titre')
+        if not (item['matieriaux']):
+            item['matieriaux'] = findCritere(materiaux, description[description.lower().find('cadre'):250],'description') 
 
-        item['tailleRoueVelo'] = findCritere(roues, item['titreVelo'], 'titre')
-        if not (item['tailleRoueVelo']):
-            item['tailleRoueVelo'] = findCritere(roues, descriptionVelo,'description') 
+        item['tailleRoue'] = findCritere(roues, item['titre'], 'titre')
+        if not (item['tailleRoue']):
+            item['tailleRoue'] = findCritere(roues, description,'description') 
 
-        item['ageVelo'] = findCritere(tailleEnfant, item['titreVelo'], 'titre')
-        if not (item['ageVelo']):
-            item['ageVelo'] = findCritere(tailleEnfant, descriptionVelo,'description') 
-        if (item['ageVelo']):
-            item['ageVelo'] = findDoubleCritereEnfant(ageEnfant, item['ageVelo'],item['universVelo']) 
+        item['age'] = findCritere(tailleEnfant, item['titre'], 'titre')
+        if not (item['age']):
+            item['age'] = findCritere(tailleEnfant, description,'description') 
+        if (item['age']):
+            item['age'] = findDoubleCritereEnfant(ageEnfant, item['age'],item['univers']) 
 
 
-        #item['poidsVelo'] = cleanSpace(''.join(response.xpath('//*[@id="product-description"]//tr[contains(., "Poids")]/td[2]/text()').extract()).strip()).replace('\n', '')
-        #item['photoVelo']  = ''.join(response.xpath('//*[@id="product-header-pictures"]/div[2]/div/div/div/div/a/img[1]/@src').extract()).strip().replace('\n', '')
-        item['descriptionVelo'] = descriptionVelo[descriptionVelo.lower().find('cadre'):250]
+        item['description'] = description[description.lower().find('cadre'):250]
+        item['modele'] = item['titre'].replace(item['univers'],'').replace(item['style'],'').replace(item['marque'],'').replace(item['genre'],'')
+
         yield item
