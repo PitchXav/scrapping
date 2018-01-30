@@ -3,7 +3,7 @@ import unicodedata
 import re
 from itertools import groupby
 from scrapy.conf import settings
-from scraper.items_velo import ScraperItem
+from scraper.items_velo import ScraperItemVelo
 import sys
 
 reload(sys)
