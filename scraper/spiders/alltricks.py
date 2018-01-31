@@ -164,15 +164,15 @@ class alltricksSpider(scrapy.Spider):
         item['description'] = description[extractDebut:extractDebut+750]
 
         ####Description
-        item['modele'] = re.sub(')','',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub('(','',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['titre'],'',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['univers'],'',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['style'],'',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['marque'],'',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['genre'],'',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['age'],'',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['cadre'],'',item['modele'], flags=re.IGNORECASE)
-        item['modele'] = re.sub(item['tailleRoue'].replace('\\',''),item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(')','',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub('(','',item['modele'],re.IGNORECASE)
+        item['modele'] = re.sub(item['titre'],'',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub(item['univers'],'',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub(item['style'],'',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub(item['marque'],'',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub(item['genre'],'',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub(item['age'],'',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub(item['cadre'],'',item['modele'], re.IGNORECASE)
+        item['modele'] = re.sub(item['tailleRoue'].replace('\\',''),item['modele'], re.IGNORECASE)
         ###
         yield item
