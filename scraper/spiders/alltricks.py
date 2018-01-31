@@ -162,7 +162,17 @@ class alltricksSpider(scrapy.Spider):
             item['age'] = findDoubleCritereEnfant(ageEnfant, item['age'],item['univers']) 
 
         item['description'] = description[extractDebut:extractDebut+750]
-        item['modele'] = item['titre'].replace(')','').replace('(','').replace(item['univers'],'').replace(item['style'],'').replace(item['marque'],'').replace(item['genre'],'').replace(item['age'],'').replace(item['cadre'],'')
 
-
+        ####Description
+        item['modele'] = re.sub(')','',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub('(','',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['titre'],'',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['univers'],'',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['style'],'',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['marque'],'',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['genre'],'',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['age'],'',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['cadre'],'',item['modele'], flags=re.IGNORECASE)
+        item['modele'] = re.sub(item['tailleRoue'].replace('\\',''),item['modele'], flags=re.IGNORECASE)
+        ###
         yield item
