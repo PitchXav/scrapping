@@ -67,19 +67,16 @@ class alltricksSpider(scrapy.Spider):
         def findCritere(liste, texte, origine):
             retour = ''
             for word in liste:
-                if re.search(suppAccent(word), suppAccent(texte), re.IGNORECASE):
-                    print 'findCritere' + origine
+                if re.search(suppAccent(word), suppAccent(texte.replace('draisienne','Vélo enfant')), re.IGNORECASE):
                     retour = word.replace('girls','fille').replace('girl','fille').replace('boys','garçon').replace('boy','garçon')
                     break
             return retour
 
         def findDoubleCritereEnfant(liste, texte,univers):
             retour = ''
-            print 'findDoubleCritereEnfant' + texte + response.url
             if (texte):
                 for key,value in liste.items():
                     if (key == texte and univers == 'Enfant'):
-                        print 'liste[l]' + value
                         retour = value
                         break
             return retour
@@ -90,7 +87,7 @@ class alltricksSpider(scrapy.Spider):
         materiaux = ['Aluminium','Acier','Carbone']
         pratique = ['Fat Bike','All Mountain','Cross country','descente','enduro','freeride','Course','Piste','Cyclocross','contre la montre','Gravel','Freestyle','Race','flat','Trail','Route']
         style = ['VTT','VTC','Ville','Pliant','Draisienne','Tricycle','BMX','hollandais','vintage','fixie','urban']
-        univers = ['Enfant','VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant']
+        univers = ['Vélo Enfant','VTT','VTC','Vélo de ville','BMX','Vélo de Route','électrique','Vélo Pliant']
         genre = ['femme','homme','adulte','enfant','fille','garçon','girls','girl','boys','boy']
         tailleEnfant = ['draisienne', '12 pouces','12\'\'','14 pouces','14\'\'', '16 pouces','16\'\'','20 pouces','20\'\'','24 pouces','24\'\'']
         ageEnfant = {'draisienne':'2 ans','12 pouces':'3 à 5 ans','12\'\'' : '3 à 5 ans', '14 pouces':'3 à 5 ans','14\'\'' : '3 à 5 ans', '16 pouces':'4 à 5 ans','16\'\'':'4 à 5 ans','20 pouces':'6 à 7 ans','20\'\'':'6 à 7 ans','24 pouces':'+8 ans','24\'\'':'+8 ans'}
@@ -165,7 +162,7 @@ class alltricksSpider(scrapy.Spider):
             item['age'] = findDoubleCritereEnfant(ageEnfant, item['age'],item['univers']) 
 
         item['description'] = description[extractDebut:extractDebut+750]
-        item['modele'] = item['titre'].replace(item['univers'],'').replace(item['style'],'').replace(item['marque'],'').replace(item['genre'],'')
+        item['modele'] = item['titre'].replace(')','').replace('(','').replace(item['univers'],'').replace(item['style'],'').replace(item['marque'],'').replace(item['genre'],'').replace(item['age'],'').replace(item['cadre'],'')
 
 
         yield item
